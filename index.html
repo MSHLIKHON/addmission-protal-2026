@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="bn" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>এডমিশন পোর্টাল ও ট্র্যাকার ২০২৬-২০২৭ — সকল সরকারি ও শীর্ষ বেসরকারি বিশ্ববিদ্যালয়</title>
+  <meta name="description" content="বাংলাদেশ বিশ্ববিদ্যালয় ভর্তি পরীক্ষা ২০২৬-২০২৭ এর সকল সরকারি ও শীর্ষ বেসরকারি বিশ্ববিদ্যালয়ের পূর্ণাঙ্গ সময়সূচী, আবেদন ফি ও ট্র্যাকার।" />
+  <meta name="theme-color" content="#064e3b" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎓</text></svg>" />
+
+  <!-- Modular Stylesheet Bundle -->
+  <link rel="stylesheet" href="css/main.css" />
+</head>
+<body class="custom-scrollbar">
+
+
+
+  <!-- Top Header / Hero Bar -->
+  <header class="bg-gradient-to-r from-emerald-900 text-white shadow-md sticky top-0 z-30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+        <div class="flex items-start sm:items-center gap-3.5">
+          <div class="w-12 h-12 rounded-2xl bg-emerald-500/20 border border-emerald-400/30 flex items-center justify-center shrink-0 shadow-inner">
+            <svg width="26" height="26" class="w-6 h-6 text-emerald-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+            </svg>
+          </div>
+          <div>
+            <div class="flex flex-wrap items-center gap-2">
+              <h1 id="lblAppTitle" class="text-lg sm:text-xl font-bold tracking-tight text-white">বিশ্ববিদ্যালয় ভর্তি পোর্টাল ও ট্র্যাকার ২০২৬-২০২৭</h1>
+              <span id="lblAppBadge" class="px-2.5 py-0.5 text-[11px] font-bold rounded-full bg-emerald-400/20 text-emerald-200 border border-emerald-400/30">সরকারি + IUT + টপ ১০ প্রাইভেট</span>
+            </div>
+            <p id="lblAppSubtitle" class="text-xs text-emerald-100/80 mt-0.5">
+              সকল সরকারি ও শীর্ষ বেসরকারি বিশ্ববিদ্যালয়ের অফিশিয়াল ভর্তি লিংক, ক্যালেন্ডার, GPA যোগ্যতা, ক্ল্যাশ অ্যালার্ট ও আইডি/পাসওয়ার্ড ভল্ট
+            </p>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2">
+          <!-- Bilingual BN / EN Toggle Pill -->
+          <div class="inline-flex items-center rounded-xl bg-slate-900/60 p-0.5 border border-white/15" role="group" aria-label="Language Switcher">
+            <button type="button" id="btnLangBn" class="px-2.5 py-1 rounded-lg text-xs font-bold bg-emerald-400 text-slate-950 transition">বাংলা</button>
+            <button type="button" id="btnLangEn" class="px-2.5 py-1 rounded-lg text-xs font-bold text-slate-200 hover:text-white transition">EN</button>
+          </div>
+
+          <span id="autoSyncBadge" class="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-emerald-500/20 text-emerald-200 border border-emerald-400/30">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse-dot"></span>
+            <span id="lblAutoSyncSaved">অটো-সেভ চালু</span>
+          </span>
+
+          <button id="btnSmartParserModal" type="button" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-amber-400 hover:bg-amber-300 text-slate-950 transition shadow-2xs">
+            <svg width="15" height="15" class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+            <span id="lblSmartParserBtn">স্মার্ট সার্কুলার পার্সার</span>
+          </button>
+
+          <button id="btnAddUniModal" type="button" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-emerald-500 hover:bg-emerald-400 text-slate-950 transition shadow-2xs">
+            <svg width="15" height="15" class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+            </svg>
+            <span id="lblAddUniBtn">নতুন তথ্য যোগ</span>
+          </button>
+
+          <button id="btnExportCsv" type="button" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-white/10 hover:bg-white/20 text-white border border-white/15 transition">
+            <svg width="15" height="15" class="w-3.5 h-3.5 text-emerald-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+            </svg>
+            <span id="lblExportCsvBtn">CSV ডাউনলোড</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Navigation Tabs -->
+    <div class="bg-slate-900/60 border-t border-white/10">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between overflow-x-auto custom-scrollbar">
+        <nav class="flex space-x-1 py-2" aria-label="Main Tabs">
+          <button type="button" data-main-tab="directory" class="main-tab-btn px-3.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition flex items-center gap-1.5 bg-emerald-500 text-slate-950 shadow-sm">
+            <svg width="16" height="16" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+            </svg>
+            <span id="navTabDir">সকল বিশ্ববিদ্যালয়</span>
+            <span id="navBadgeTotal" class="px-2 py-0.2 text-[11px] rounded-full bg-slate-900/20 font-bold">৫২</span>
+          </button>
+
+          <button type="button" data-main-tab="timeline" class="main-tab-btn px-3.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition flex items-center gap-1.5 text-slate-200 hover:bg-white/10">
+            <svg width="16" height="16" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            <span id="navTabTime">ক্যালেন্ডার ও ক্ল্যাশ অ্যালার্ট</span>
+            <span id="navBadgeClashes" class="px-2 py-0.2 text-[11px] rounded-full bg-rose-600 text-white font-bold">০</span>
+          </button>
+
+          <button type="button" data-main-tab="eligibility" class="main-tab-btn px-3.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition flex items-center gap-1.5 text-slate-200 hover:bg-white/10">
+            <svg width="16" height="16" class="w-4 h-4 text-amber-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+            </svg>
+            <span id="navTabElig">GPA যোগ্যতা যাচাই</span>
+          </button>
+
+          <button type="button" data-main-tab="targets" class="main-tab-btn px-3.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition flex items-center gap-1.5 text-slate-200 hover:bg-white/10">
+            <svg width="16" height="16" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+            </svg>
+            <span id="navTabTargets">টার্গেট ও ফি ক্যালকুলেটর</span>
+            <span id="navBadgeTargets" class="px-2 py-0.2 text-[11px] rounded-full bg-amber-400 text-slate-950 font-bold">০</span>
+          </button>
+
+          <button type="button" data-main-tab="credentials" class="main-tab-btn px-3.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition flex items-center gap-1.5 text-slate-200 hover:bg-white/10">
+            <svg width="16" height="16" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+            </svg>
+            <span id="navTabCreds">আইডি ও পাসওয়ার্ড ভল্ট</span>
+            <span id="navBadgeCreds" class="px-2 py-0.2 text-[11px] rounded-full bg-emerald-400 text-slate-950 font-bold">০</span>
+          </button>
+
+          <button type="button" data-main-tab="guide" class="main-tab-btn px-3.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition flex items-center gap-1.5 text-slate-200 hover:bg-white/10">
+            <svg width="16" height="16" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span id="navTabGuide">ভর্তি প্রস্তুতি চেকলিস্ট</span>
+          </button>
+        </nav>
+
+        <div class="hidden lg:flex items-center gap-2 text-xs text-emerald-200/90 py-1">
+          <span class="inline-block w-2 h-2 rounded-full bg-emerald-400"></span>
+          <span id="nextExamBannerText">পরবর্তী পরীক্ষা: এভিয়েশন বিশ্ববিদ্যালয় (৫ ডিসেম্বর)</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-5 space-y-5">
+
+    <!-- Executive Next Exam Live Countdown & Quick Action Bar -->
+    <section aria-label="পরবর্তী ভর্তি পরীক্ষার কাউন্টডাউন" class="countdown-banner text-white rounded-2xl p-4 sm:px-6 shadow-md border border-slate-700/80">
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+        <!-- Left: Selected Upcoming Exam Info & Selector -->
+        <div class="space-y-1.5 flex-1">
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse-dot"></span>
+              <span id="lblHeroCdBadge">পরবর্তী ভর্তি পরীক্ষা কাউন্টডাউন</span>
+            </span>
+            <select id="countdownTargetSelect" aria-label="কাউন্টডাউন বিশ্ববিদ্যালয় পরিবর্তন" class="bg-white/10 hover:bg-white/20 text-white text-xs font-semibold rounded-lg px-2.5 py-1 border border-white/15 focus:outline-none transition cursor-pointer">
+            </select>
+          </div>
+          <div id="heroNextExamName" class="text-base sm:text-lg font-bold text-white tracking-tight">মেডিকেল ও ডেন্টাল ( সরকারি MBBS / BDS )</div>
+          <div id="heroNextExamMeta" class="text-xs text-emerald-200/90">৪ ডিসেম্বর ২০২৬ • সকাল ১০:০০টা • ১৭টি সরকারি মেডিকেল কলেজ কেন্দ্র</div>
+        </div>
+
+        <!-- Middle: Live D : H : M : S Digital Clock -->
+        <div class="grid grid-cols-4 gap-2 sm:gap-2.5 text-center font-mono-num shrink-0">
+          <div class="bg-white/10 rounded-xl py-2 px-3 border border-white/10 min-w-[62px]">
+            <div id="cdDays" class="text-lg sm:text-xl font-bold text-emerald-300">৪০</div>
+            <div id="lblCdDays" class="text-[11px] text-slate-300 font-medium">দিন</div>
+          </div>
+          <div class="bg-white/10 rounded-xl py-2 px-3 border border-white/10 min-w-[62px]">
+            <div id="cdHours" class="text-lg sm:text-xl font-bold text-white">১০</div>
+            <div id="lblCdHours" class="text-[11px] text-slate-300 font-medium">ঘণ্টা</div>
+          </div>
+          <div class="bg-white/10 rounded-xl py-2 px-3 border border-white/10 min-w-[62px]">
+            <div id="cdMins" class="text-lg sm:text-xl font-bold text-white">৪২</div>
+            <div id="lblCdMins" class="text-[11px] text-slate-300 font-medium">মিনিট</div>
+          </div>
+          <div class="bg-white/10 rounded-xl py-2 px-3 border border-white/10 min-w-[62px]">
+            <div id="cdSecs" class="text-lg sm:text-xl font-bold text-amber-300">১৯</div>
+            <div id="lblCdSecs" class="text-[11px] text-slate-300 font-medium">সেকেন্ড</div>
+          </div>
+        </div>
+
+        <!-- Right: Quick Jump Shortcuts -->
+        <div class="flex flex-wrap sm:flex-nowrap lg:flex-col gap-2 shrink-0">
+          <button type="button" id="btnHeroViewCalendar" class="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-emerald-500 hover:bg-emerald-400 text-slate-950 transition shadow-2xs flex items-center justify-center gap-1.5">
+            <span>📅</span>
+            <span id="lblHeroCalBtn">ভিজ্যুয়াল ক্যালেন্ডার</span>
+          </button>
+          <button type="button" id="btnHeroCheckGpa" class="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-white/10 hover:bg-white/20 text-white border border-white/15 transition flex items-center justify-center gap-1.5">
+            <span>🎓</span>
+            <span id="lblHeroGpaBtn">GPA যোগ্যতা যাচাই</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick Interactive Summary KPI Strip -->
+    <section aria-label="সারসংক্ষেপ পরিসংখ্যান" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5 sm:gap-4">
+      <button type="button" data-quick-kpi="all" class="kpi-card text-left bg-white p-4 rounded-2xl border border-slate-200/90 shadow-sm hover:border-emerald-500 transition group">
+        <div class="flex items-center justify-between">
+          <span id="kpiTitleTotal" class="text-xs font-semibold text-slate-600">মোট বিশ্ববিদ্যালয়</span>
+          <span class="w-9 h-9 rounded-xl bg-slate-100 group-hover:bg-emerald-50 text-slate-700 group-hover:text-emerald-600 flex items-center justify-center transition">
+            <svg width="18" height="18" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+            </svg>
+          </span>
+        </div>
+        <div id="statTotalUni" class="text-2xl font-bold text-slate-900 mt-1">৫২</div>
+        <div id="kpiSubTotal" class="text-xs text-slate-500 mt-0.5">সরকারি ৪২ + প্রাইভেট ১০ →</div>
+      </button>
+
+      <button type="button" data-quick-kpi="announced" class="kpi-card text-left bg-white p-4 rounded-2xl border border-slate-200/90 shadow-sm hover:border-teal-500 transition group">
+        <div class="flex items-center justify-between">
+          <span id="kpiTitleAnnounced" class="text-xs font-semibold text-slate-600">পরীক্ষার তারিখ ঘোষিত</span>
+          <span class="w-9 h-9 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center">
+            <svg width="18" height="18" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+          </span>
+        </div>
+        <div id="statDateAnnounced" class="text-2xl font-bold text-teal-700 mt-1">২৩</div>
+        <div id="statDateUnpublished" class="text-xs text-slate-500 mt-0.5">ফাঁকা / দেয়নি: ২৯টি</div>
+      </button>
+
+      <button type="button" data-quick-kpi="deadline_known" class="kpi-card text-left bg-white p-4 rounded-2xl border border-slate-200/90 shadow-sm hover:border-blue-500 transition group">
+        <div class="flex items-center justify-between">
+          <span id="kpiTitleDeadline" class="text-xs font-semibold text-slate-600">ফরম পূরণ তারিখ ঘোষিত</span>
+          <span class="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
+            <svg width="18" height="18" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </span>
+        </div>
+        <div id="statDeadlineKnown" class="text-2xl font-bold text-blue-700 mt-1">৫</div>
+        <div id="kpiSubDeadline" class="text-xs text-blue-600 font-semibold mt-0.5">আবেদনের সময়সীমা দেখুন →</div>
+      </button>
+
+      <button type="button" data-quick-kpi="applied" class="kpi-card text-left bg-white p-4 rounded-2xl border border-slate-200/90 shadow-sm hover:border-emerald-500 transition group">
+        <div class="flex items-center justify-between">
+          <span id="kpiTitleApplied" class="text-xs font-semibold text-slate-600">আবেদন সম্পন্ন</span>
+          <span class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+            <svg width="18" height="18" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+          </span>
+        </div>
+        <div id="statAppliedCount" class="text-2xl font-bold text-emerald-700 mt-1">০</div>
+        <div id="statPendingCount" class="text-xs text-slate-500 mt-0.5">আবেদন বাকি: ৫২টি</div>
+      </button>
+
+      <button type="button" data-quick-kpi="target" class="kpi-card col-span-2 sm:col-span-1 text-left bg-gradient-to-br from-amber-50 p-4 rounded-2xl border border-amber-200/90 shadow-sm hover:border-amber-400 transition group">
+        <div class="flex items-center justify-between">
+          <span id="kpiTitleTarget" class="text-xs font-bold text-amber-900">টার্গেট ও সম্ভাব্য ফি</span>
+          <span class="w-9 h-9 rounded-xl bg-amber-400/20 text-amber-700 flex items-center justify-center">
+            <svg width="18" height="18" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+            </svg>
+          </span>
+        </div>
+        <div class="flex items-baseline gap-2 mt-1">
+          <span id="statTargetCount" class="text-2xl font-bold text-amber-900">০টি</span>
+          <span id="statTargetFee" class="text-xs font-bold text-amber-800 bg-amber-200/60 px-2.5 py-0.5 rounded-full">৳ ০</span>
+        </div>
+        <div id="kpiSubTarget" class="text-xs text-amber-800/80 mt-0.5">টার্গেট ও বাজেট দেখুন →</div>
+      </button>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- VIEW 1: DIRECTORY (CARDS & TABLE)          -->
+    <!-- ========================================== -->
+    <section id="viewDirectory" class="space-y-4">
+      <!-- Search, Filters & View Mode Bar -->
+      <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/90 shadow-sm space-y-4">
+        <div class="flex flex-col lg:flex-row gap-3">
+          <!-- Search Input -->
+          <div class="relative flex-1">
+            <svg width="20" height="20" class="w-5 h-5 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+            <input
+              id="searchInput"
+              type="text"
+              placeholder="বিশ্ববিদ্যালয়ের নাম দিয়ে খুঁজুন (যেমন: DU, ঢাকা, BUET, IUT, BRAC, NSU, AUST, মেডিকেল, কৃষি)..."
+              class="w-full pl-11 pr-9 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:bg-white focus:outline-none focus:ring-2 transition"
+            />
+            <button id="btnClearSearch" type="button" title="মুছুন" class="hidden absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1">
+              <svg width="18" height="18" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+
+          <!-- Status Filter, Sort & View Toggle -->
+          <div class="flex flex-wrap sm:flex-nowrap items-center gap-2.5">
+            <select id="statusFilterSelect" aria-label="আবেদনের অবস্থা ফিল্টার" class="bg-slate-50 border border-slate-200 text-slate-800 font-medium text-xs sm:text-sm rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-2">
+              <option value="all">সব অবস্থা (সকল)</option>
+              <option value="announced">পরীক্ষার তারিখ ঘোষিত</option>
+              <option value="unpublished">তারিখ ফাঁকা / দেয়নি</option>
+              <option value="deadline_known">ফরম পূরণ তারিখ ঘোষিত</option>
+              <option value="target">শুধু আমার টার্গেট তালিকা ⭐</option>
+              <option value="has_creds">আইডি/পাসওয়ার্ড সেভ করা 🔑</option>
+              <option value="applied">আবেদন সম্পন্ন ✅</option>
+              <option value="in_progress">প্রক্রিয়াধীন ⏳</option>
+              <option value="pending">আবেদন বাকি 📝</option>
+            </select>
+
+            <select id="sortSelect" aria-label="সাজানোর ক্রম" class="bg-slate-50 border border-slate-200 text-slate-800 font-medium text-xs sm:text-sm rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-2">
+              <option value="serial">ক্রম অনুযায়ী (ডিফল্ট)</option>
+              <option value="exam_date">পরীক্ষার তারিখ (কাছের পরীক্ষা আগে)</option>
+              <option value="fee_asc">আবেদন ফি (কম থেকে বেশি)</option>
+              <option value="fee_desc">আবেদন ফি (বেশি থেকে কম)</option>
+            </select>
+
+            <!-- View Switcher (Card vs Table) -->
+            <div class="inline-flex rounded-xl border border-slate-200 bg-slate-100 p-1 shrink-0" role="group" aria-label="ভিউ মোড">
+              <button type="button" id="btnViewCards" class="px-3.5 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 bg-white text-emerald-700 shadow-sm transition">
+                <svg width="16" height="16" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                </svg>
+                <span>কার্ড</span>
+              </button>
+              <button type="button" id="btnViewTable" class="px-3.5 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 text-slate-600 hover:text-slate-900 transition">
+                <svg width="16" height="16" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                </svg>
+                <span>টেবিল</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Category Pills -->
+        <div class="flex items-center gap-2 overflow-x-auto custom-scrollbar pb-1" id="categoryFilterBar">
+          <button type="button" data-category="all" class="cat-pill px-3.5 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition bg-emerald-600 text-white shadow-sm">
+            সব বিভাগ (৫২)
+          </button>
+          <button type="button" data-category="general" class="cat-pill px-3.5 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition bg-slate-100 text-slate-700 hover:bg-slate-200">
+            সরকারি সাধারণ ও স্বায়ত্তশাসিত
+          </button>
+          <button type="button" data-category="engineering" class="cat-pill px-3.5 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition bg-slate-100 text-slate-700 hover:bg-slate-200">
+            ইঞ্জিনিয়ারিং, টেক্সটাইল ও IUT
+          </button>
+          <button type="button" data-category="scitech" class="cat-pill px-3.5 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition bg-slate-100 text-slate-700 hover:bg-slate-200">
+            বিজ্ঞান ও প্রযুক্তি (সরকারি)
+          </button>
+          <button type="button" data-category="medical" class="cat-pill px-3.5 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition bg-slate-100 text-slate-700 hover:bg-slate-200">
+            মেডিকেল, নার্সিং ও হেলথ
+          </button>
+          <button type="button" data-category="specialized" class="cat-pill px-3.5 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition bg-slate-100 text-slate-700 hover:bg-slate-200">
+            কৃষি ও বিশেষায়িত (সরকারি)
+          </button>
+          <button type="button" data-category="private" class="cat-pill px-3.5 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition bg-slate-100 text-slate-700 hover:bg-slate-200">
+            টপ ১০ বেসরকারি (Private)
+          </button>
+        </div>
+      </div>
+
+      <!-- Active Filter Result Bar -->
+      <div class="flex flex-wrap items-center justify-between gap-2 px-1">
+        <div class="text-sm text-slate-700 font-semibold" id="resultsCountLabel">
+          মোট ৫২টি বিশ্ববিদ্যালয়ের তথ্য দেখানো হচ্ছে
+        </div>
+        <div class="flex items-center gap-3">
+          <button type="button" id="btnResetFilters" class="hidden text-xs font-bold text-emerald-700 hover:text-emerald-800 underline">
+            সব ফিল্টার রিসেট করুন
+          </button>
+          <span class="text-xs text-slate-500">যেকোনো কার্ডে ✏️ বাটনে ক্লিক করে তারিখ পরিবর্তন করলে সব জায়গায় অটো-সিঙ্ক হবে</span>
+        </div>
+      </div>
+
+      <!-- Cards Grid Container -->
+      <div id="cardsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+
+      <!-- Table View Container -->
+      <div id="tableContainer" class="hidden bg-white rounded-2xl border border-slate-200/90 shadow-sm overflow-hidden">
+        <div class="overflow-x-auto custom-scrollbar">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="bg-slate-100/90 border-b border-slate-200 text-slate-800 text-xs font-bold uppercase">
+                <th class="py-3.5 px-3 text-center w-12">ক্রম</th>
+                <th class="py-3.5 px-3 text-center w-14">টার্গেট</th>
+                <th class="py-3.5 px-4">বিশ্ববিদ্যালয়ের নাম</th>
+                <th class="py-3.5 px-4">পরীক্ষার তারিখ</th>
+                <th class="py-3.5 px-4">ফরম পূরণের সময়সীমা</th>
+                <th class="py-3.5 px-4">ফি (৳)</th>
+                <th class="py-3.5 px-4">আবেদনের অবস্থা</th>
+                <th class="py-3.5 px-4 text-right">অফিশিয়াল লিংক ও অ্যাকশন</th>
+              </tr>
+            </thead>
+            <tbody id="tableBody" class="divide-y divide-slate-200/70 text-sm"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Empty State -->
+      <div id="emptyState" class="hidden bg-white rounded-2xl border border-slate-200 p-10 text-center max-w-md mx-auto my-6">
+        <div class="w-12 h-12 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center mx-auto mb-3">
+          <svg width="24" height="24" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <h3 class="text-base font-bold text-slate-800">কোনো বিশ্ববিদ্যালয় পাওয়া যায়নি</h3>
+        <p class="text-xs text-slate-500 mt-1">আপনার সার্চ বা ফিল্টার পরিবর্তন করে আবার চেষ্টা করুন।</p>
+        <button type="button" id="btnEmptyReset" class="mt-4 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition">
+          সকল বিশ্ববিদ্যালয় দেখুন
+        </button>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- VIEW 2: TIMELINE & DYNAMIC CLASH ALERTS    -->
+    <!-- ========================================== -->
+    <section id="viewTimeline" class="hidden space-y-6">
+      <!-- Dynamic Exam Clash & Travel Risk Engine -->
+      <div class="bg-amber-50 border-2 border-amber-200 rounded-2xl p-5 shadow-sm space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-amber-200/80 pb-3.5">
+          <div class="flex items-start gap-3">
+            <div class="w-11 h-11 rounded-xl bg-amber-500/20 text-amber-800 flex items-center justify-center shrink-0 mt-0.5">
+              <svg width="22" height="22" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+            </div>
+            <div>
+              <h2 class="text-base sm:text-lg font-bold text-amber-950">স্মার্ট ক্ল্যাশ অ্যালার্ট ও যাতায়াত ঝুঁকি বিশ্লেষক (Auto-Synced Clash Detector)</h2>
+              <p class="text-xs sm:text-sm text-amber-900/80 mt-0.5">
+                আপনি কোনো বিশ্ববিদ্যালয়ের পরীক্ষার তারিখ পরিবর্তন করলে এই ক্ল্যাশ তালিকা স্বয়ংক্রিয়ভাবে হিসাব হয়ে আপডেট হবে:
+              </p>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2 self-start sm:self-center shrink-0">
+            <button type="button" id="btnClashAll" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-amber-500 text-slate-950 shadow-2xs transition">
+              সব ক্ল্যাশ দেখুন
+            </button>
+            <button type="button" id="btnClashTargets" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-white text-amber-900 border border-amber-300 hover:bg-amber-100 transition">
+              শুধু টার্গেট তালিকার ক্ল্যাশ
+            </button>
+          </div>
+        </div>
+
+        <div id="dynamicClashGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5"></div>
+      </div>
+
+      <!-- Application Deadlines (Auto-Synced) -->
+      <div class="bg-white rounded-2xl border border-slate-200/90 shadow-sm p-5">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-slate-100">
+          <div>
+            <h2 class="text-base sm:text-lg font-bold text-slate-900" id="deadlineSectionTitle">ফরম পূরণের সময়সূচি (ঘোষিত বিশ্ববিদ্যালয়সমূহ)</h2>
+            <p class="text-xs text-slate-500">যেসব বিশ্ববিদ্যালয়ের আবেদনের তারিখ ঘোষিত হয়েছে বা আপনি যুক্ত করেছেন</p>
+          </div>
+          <span class="px-3 py-1 rounded-full text-xs font-bold bg-blue-50 text-blue-700 border border-blue-200 self-start sm:self-auto">
+            অটো-সিঙ্কড ফরম শিডিউল
+          </span>
+        </div>
+        <div id="applicationTimelineGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5 mt-4"></div>
+      </div>
+
+      <!-- Interactive 7-Column Visual Monthly Calendar Grid (Chorcha & MNR Study Style) -->
+      <div class="bg-white rounded-2xl border border-slate-200/90 shadow-sm p-5 space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-3.5">
+          <div>
+            <span class="px-2.5 py-0.5 text-[11px] font-bold rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">ভিজ্যুয়াল ক্যালেন্ডার গ্রিড</span>
+            <h2 class="text-base sm:text-lg font-bold text-slate-900 mt-1">ডিরেক্ট ক্যালেন্ডারেই ভর্তি পরীক্ষার দিনক্ষণ দেখুন</h2>
+            <p class="text-xs text-slate-500">যেকোনো মাসের নামের ওপর ক্লিক করে ৭-দিনের ক্যালেন্ডার গ্রিডে পরীক্ষার তারিখ ও ক্ল্যাশ দেখুন</p>
+          </div>
+          <div class="flex flex-wrap items-center gap-1.5" id="visualCalMonthTabs">
+            <button type="button" data-cal-month="2026-12" class="cal-month-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-emerald-600 text-white shadow-2xs transition">ডিসেম্বর ২০২৬</button>
+            <button type="button" data-cal-month="2027-01" class="cal-month-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition">জানুয়ারি ২০২৭</button>
+            <button type="button" data-cal-month="2027-02" class="cal-month-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition">ফেব্রুয়ারি ২০২৭</button>
+            <button type="button" data-cal-month="2027-03" class="cal-month-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition">মার্চ ২০২৭</button>
+          </div>
+        </div>
+
+        <!-- 7-Day Weekday Header -->
+        <div class="grid grid-cols-7 gap-1.5 text-center text-xs font-bold text-slate-600 bg-slate-100/80 py-2 rounded-xl border border-slate-200/70">
+          <div>রবি</div>
+          <div>সোম</div>
+          <div>মঙ্গল</div>
+          <div>বুধ</div>
+          <div>বৃহঃ</div>
+          <div class="text-rose-700">শুক্র</div>
+          <div class="text-emerald-700">শনি</div>
+        </div>
+
+        <!-- 7-Day Calendar Cells -->
+        <div id="visualCalendarGrid" class="grid grid-cols-7 gap-1.5"></div>
+      </div>
+
+      <!-- Month-by-Month Exam Calendar List -->
+      <div class="space-y-4">
+        <h2 class="text-base sm:text-lg font-bold text-slate-900 px-1">মাসভিত্তিক ভর্তি পরীক্ষার বিস্তারিত তালিকা (অটো-সিঙ্কড)</h2>
+        <div id="monthlyExamTimeline" class="space-y-4"></div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- VIEW 3: CREDENTIALS & USER ID/PASS VAULT   -->
+    <!-- ========================================== -->
+    <section id="viewCredentials" class="hidden space-y-6">
+      <div class="bg-white rounded-2xl border border-slate-200/90 shadow-sm p-5 space-y-4">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-slate-100 pb-4">
+          <div>
+            <div class="flex items-center gap-2">
+              <h2 class="text-base sm:text-lg font-bold text-slate-900">বিশ্ববিদ্যালয়ভিত্তিক ইউজার আইডি, পাসওয়ার্ড ও তথ্য ভল্ট</h2>
+              <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800">নিজ ডিভাইসে সুরক্ষিত</span>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-600 mt-0.5">
+              প্রতিটি বিশ্ববিদ্যালয়ের আবেদনের User ID, Password, ভর্তি পরীক্ষার রোল, কেন্দ্র ও ট্রানজেকশন আইডি এখানে লিখে রাখলে আপনার এই ডিভাইসেই স্বয়ংক্রিয়ভাবে সেভ থাকবে।
+            </p>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-2">
+            <select id="credFilterSelect" aria-label="ভল্ট ফিল্টার" class="bg-slate-50 border border-slate-200 text-slate-800 font-semibold text-xs sm:text-sm rounded-xl px-3 py-2">
+              <option value="all">সকল বিশ্ববিদ্যালয় (৫২)</option>
+              <option value="saved">শুধু তথ্য সেভ করা আছে এমনগুলো</option>
+              <option value="target">শুধু আমার টার্গেট বিশ্ববিদ্যালয় ⭐</option>
+              <option value="applied">আবেদন সম্পন্ন বিশ্ববিদ্যালয় ✅</option>
+            </select>
+            <input
+              id="credSearchInput"
+              type="text"
+              placeholder="ভল্টে বিশ্ববিদ্যালয় খুঁজুন..."
+              class="px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm focus:bg-white focus:outline-none focus:ring-2"
+            />
+          </div>
+        </div>
+
+        <div id="credentialsVaultGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- VIEW 4: TARGETS & FEE CALCULATOR           -->
+    <!-- ========================================== -->
+    <section id="viewTargets" class="hidden space-y-6">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Left 2 Cols: Target List & Unit Fee Picker -->
+        <div class="lg:col-span-2 bg-white rounded-2xl border border-slate-200/90 shadow-sm p-5 space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-4">
+            <div>
+              <h2 class="text-base sm:text-lg font-bold text-slate-900">আমার টার্গেট বিশ্ববিদ্যালয় তালিকা ও বাজেট</h2>
+              <p class="text-xs text-slate-500">যেকোনো কার্ডে ⭐ বাটনে ক্লিক করে টার্গেট তালিকায় যোগ করুন অথবা নিচের কুইক-অ্যাড ব্যবহার করুন</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <button type="button" id="btnSelectTopDated" class="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200 transition">
+                + জনপ্রিয় ১০টি যোগ করুন
+              </button>
+              <button type="button" id="btnClearTargets" class="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-rose-50 text-rose-700 hover:bg-rose-100 border border-rose-200 transition">
+                সব মুছুন
+              </button>
+            </div>
+          </div>
+
+          <div id="targetListContainer" class="space-y-3"></div>
+        </div>
+
+        <!-- Right Col: Financial Summary & Fee Breakdown -->
+        <div class="space-y-4">
+          <div class="bg-gradient-to-br from-slate-900 text-white rounded-2xl p-5 shadow-md space-y-4">
+            <div class="flex items-center justify-between">
+              <span class="text-xs uppercase tracking-wider text-emerald-300 font-bold">মোট প্রাক্কলিত আবেদন খরচ</span>
+              <span class="px-2.5 py-0.5 text-xs rounded-full bg-white/10 text-emerald-200 font-bold" id="calcTargetCountBadge">০টি বিশ্ববিদ্যালয়</span>
+            </div>
+            <div class="text-3xl font-bold tracking-tight" id="calcTotalFeeDisplay">৳ ০</div>
+
+            <div class="grid grid-cols-2 gap-3 pt-2 border-t border-white/10 text-xs">
+              <div class="bg-white/5 p-3 rounded-xl">
+                <div class="text-slate-300">আবেদন সম্পন্ন (পরিশোধিত)</div>
+                <div class="text-base font-bold text-emerald-400 mt-1" id="calcPaidFeeDisplay">৳ ০</div>
+              </div>
+              <div class="bg-white/5 p-3 rounded-xl">
+                <div class="text-slate-300">আবেদন বাকি (প্রয়োজনীয়)</div>
+                <div class="text-base font-bold text-amber-300 mt-1" id="calcRemainingFeeDisplay">৳ ০</div>
+              </div>
+            </div>
+
+            <div class="text-xs text-slate-300/90 leading-relaxed pt-1">
+              * যেসব বিশ্ববিদ্যালয়ে একাধিক ইউনিট বা প্রাথমিক/চূড়ান্ত ফি রয়েছে, সেগুলোর ক্ষেত্রে আপনার নির্বাচিত ইউনিটের ফি হিসাব করা হয়েছে।
+            </div>
+          </div>
+
+          <!-- Quick Add Pill Box -->
+          <div class="bg-white rounded-2xl border border-slate-200/90 shadow-sm p-4 space-y-3">
+            <h3 class="text-sm font-bold text-slate-800">দ্রুত টার্গেট তালিকায় যোগ/বাদ দিন</h3>
+            <p class="text-xs text-slate-500">নামের ওপর ক্লিক করলেই আপনার টার্গেট তালিকায় যুক্ত বা বাদ হবে:</p>
+            <div id="quickTargetTogglePills" class="flex flex-wrap gap-1.5 max-h-64 overflow-y-auto custom-scrollbar pr-1"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- VIEW 5: ADMISSION PREPARATION CHECKLIST    -->
+    <!-- ========================================== -->
+    <section id="viewGuide" class="hidden space-y-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-white rounded-2xl border border-slate-200/90 shadow-sm p-5 space-y-4">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+            <div>
+              <h2 class="text-base sm:text-lg font-bold text-slate-900">ভর্তি আবেদনের প্রয়োজনীয় কাগজপত্র ও প্রস্তুতি চেকলিস্ট</h2>
+              <p class="text-xs text-slate-500">অনলাইন আবেদনের আগে যেসব ডকুমেন্ট ও তথ্য হাতের কাছে রাখা জরুরি</p>
+            </div>
+            <span id="checklistProgressBadge" class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800">০/৮ সম্পন্ন</span>
+          </div>
+          <div id="prepChecklistContainer" class="space-y-2.5"></div>
+        </div>
+
+        <div class="space-y-4">
+          <div class="bg-white rounded-2xl border border-slate-200/90 shadow-sm p-5 space-y-3.5">
+            <h3 class="text-base font-bold text-slate-900">অটো-সিঙ্ক, ব্যাকআপ ও জরুরি পরামর্শ</h3>
+            <ul class="space-y-2.5 text-xs sm:text-sm text-slate-700">
+              <li class="flex items-start gap-2.5">
+                <span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center shrink-0 mt-0.5 text-xs">১</span>
+                <span><strong>অটো-সিঙ্ক তারিখ ও ক্ল্যাশ অ্যালার্ট:</strong> যেকোনো বিশ্ববিদ্যালয়ের পরীক্ষার তারিখ বা ফরম পূরণের তারিখ পরিবর্তন করলে সাথে সাথেই মাসিক ক্যালেন্ডার, কাউন্টডাউন এবং ক্ল্যাশ অ্যালার্ট স্বয়ংক্রিয়ভাবে সিঙ্ক হয়ে যাবে।</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center shrink-0 mt-0.5 text-xs">২</span>
+                <span><strong>ইউজার আইডি ও পাসওয়ার্ড সংরক্ষণ:</strong> প্রতিটি কার্ডের <strong>🔑 আইডি/তারিখ</strong> বাটনে অথবা উপরের <strong>আইডি ও পাসওয়ার্ড ভল্ট</strong> ট্যাবে গিয়ে আপনার ইউজার আইডি, পাসওয়ার্ড ও রোল নম্বর নিজ ডিভাইসে সেভ করে রাখতে পারবেন।</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center shrink-0 mt-0.5 text-xs">৩</span>
+                <span><strong>অফিশিয়াল অ্যাডমিশন পোর্টাল লিংক:</strong> প্রতিটি বিশ্ববিদ্যালয়ের সাথে তাদের নিজস্ব অফিশিয়াল ভর্তি ওয়েবসাইটের লিংক যুক্ত করা হয়েছে।</span>
+              </li>
+            </ul>
+            <div class="pt-3 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2">
+              <span class="text-xs text-slate-500">সব কাস্টম পরিবর্তন রিসেট করতে চান?</span>
+              <button type="button" id="btnResetAllStorage" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 hover:bg-rose-50 text-slate-700 hover:text-rose-700 border border-slate-200 transition">
+                ডিফল্ট ডেটায় ফিরুন
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- VIEW 7: GPA ELIGIBILITY CHECKER            -->
+    <!-- ========================================== -->
+    <section id="viewEligibility" class="hidden space-y-6">
+      <div class="bg-white rounded-2xl border border-slate-200/90 shadow-sm p-5 space-y-4">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-slate-100 pb-4">
+          <div>
+            <span class="px-2.5 py-0.5 text-[11px] font-bold rounded-full bg-amber-100 text-amber-800">স্মার্ট এলিজিবিলিটি চেকার (Chorcha & MNR Study স্টাইল)</span>
+            <h2 class="text-base sm:text-lg font-bold text-slate-900 mt-1">আপনার SSC ও HSC জিপিএ দিয়ে কোন কোন বিশ্ববিদ্যালয়ে আবেদন করতে পারবেন যাচাই করুন</h2>
+            <p class="text-xs text-slate-500">আপনার বিভাগ ও জিপিএ লিখলেই ৫২টি বিশ্ববিদ্যালয়ের ন্যূনতম আবেদনের যোগ্যতার সাথে মিলিয়ে তাৎক্ষণিক ফলাফল দেখাবে</p>
+          </div>
+          <span id="eligMatchCountBadge" class="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-emerald-50 text-emerald-800 border border-emerald-200 self-start md:self-center">
+            যোগ্য বিশ্ববিদ্যালয়: ৫২টি
+          </span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-4 gap-3 bg-slate-50 p-4 rounded-xl border border-slate-200/80">
+          <div>
+            <label for="eligGroupSelect" class="block text-xs font-bold text-slate-700 mb-1">আপনার বিভাগ (Group)</label>
+            <select id="eligGroupSelect" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs sm:text-sm font-semibold">
+              <option value="science">বিজ্ঞান (Science)</option>
+              <option value="humanities">মানবিক (Humanities)</option>
+              <option value="business">ব্যবসায় শিক্ষা (Business)</option>
+            </select>
+          </div>
+          <div>
+            <label for="eligSscInput" class="block text-xs font-bold text-slate-700 mb-1">SSC জিপিএ (৫.০০ এর মধ্যে)</label>
+            <input id="eligSscInput" type="number" step="0.01" min="1" max="5" value="5.00" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs sm:text-sm font-bold" />
+          </div>
+          <div>
+            <label for="eligHscInput" class="block text-xs font-bold text-slate-700 mb-1">HSC জিপিএ (৫.০০ এর মধ্যে)</label>
+            <input id="eligHscInput" type="number" step="0.01" min="1" max="5" value="5.00" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs sm:text-sm font-bold" />
+          </div>
+          <div>
+            <label for="eligSecondTimeSelect" class="block text-xs font-bold text-slate-700 mb-1">পরীক্ষার্থীর ধরন</label>
+            <select id="eligSecondTimeSelect" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs sm:text-sm font-semibold">
+              <option value="first">১ম বার (First Timer - ২০২৬)</option>
+              <option value="second">২য় বার (Second Timer - ২০২৫)</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="eligibilityResultGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Edit / Add University & Credentials Modal (With Auto-Sync Date Picker) -->
+  <div id="uniModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white rounded-2xl max-w-2xl w-full p-5 sm:p-6 shadow-xl border border-slate-200 space-y-4 my-8">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <div>
+          <h3 id="modalTitle" class="text-base sm:text-lg font-bold text-slate-900">বিশ্ববিদ্যালয়ের তথ্য, তারিখ ও আইডি/পাসওয়ার্ড আপডেট</h3>
+          <p class="text-xs text-emerald-700 font-medium">তারিখ পরিবর্তন করলে ক্যালেন্ডার ও ক্ল্যাশ অ্যালার্ট স্বয়ংক্রিয়ভাবে সিঙ্ক হবে</p>
+        </div>
+        <button type="button" id="btnCloseModal" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg">
+          <svg width="20" height="20" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <form id="uniForm" class="space-y-3.5">
+        <input type="hidden" id="formUniId" />
+        <div>
+          <label for="formUniName" class="block text-xs font-bold text-slate-700 mb-1">বিশ্ববিদ্যালয়ের নাম *</label>
+          <input id="formUniName" type="text" required class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2" placeholder="যেমন: ঢাকা বিশ্ববিদ্যালয় (DU)" />
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label for="formCategory" class="block text-xs font-bold text-slate-700 mb-1">বিভাগ / ক্যাটাগরি</label>
+            <select id="formCategory" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2">
+              <option value="general">সরকারি সাধারণ ও স্বায়ত্তশাসিত</option>
+              <option value="engineering">ইঞ্জিনিয়ারিং, টেক্সটাইল ও IUT</option>
+              <option value="scitech">বিজ্ঞান ও প্রযুক্তি (সরকারি)</option>
+              <option value="medical">মেডিকেল, নার্সিং ও হেলথ</option>
+              <option value="specialized">কৃষি ও বিশেষায়িত (সরকারি)</option>
+              <option value="private">টপ ১০ বেসরকারি (Private)</option>
+            </select>
+          </div>
+          <div>
+            <label for="formStatus" class="block text-xs font-bold text-slate-700 mb-1">আবেদনের অবস্থা</label>
+            <select id="formStatus" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2">
+              <option value="pending">আবেদন বাকি</option>
+              <option value="in_progress">প্রক্রিয়াধীন</option>
+              <option value="applied">আবেদন সম্পন্ন</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Auto-Sync Exam Date & Form Fill-up Date Row -->
+        <div class="bg-emerald-50/70 p-3.5 rounded-xl border border-emerald-200 space-y-3">
+          <div class="text-xs font-bold text-emerald-950">📅 ভর্তি পরীক্ষা ও ফরম পূরণের তারিখ (পরিবর্তন করলেই অটো-সিঙ্ক হবে)</div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div>
+              <label for="formIsoDate" class="block text-xs font-semibold text-slate-700 mb-1">ক্যালেন্ডারে পরীক্ষার তারিখ</label>
+              <input id="formIsoDate" type="date" class="w-full px-3 py-2 rounded-xl border border-emerald-300 text-sm focus:outline-none focus:ring-2" />
+            </div>
+            <div>
+              <label for="formExamDate" class="block text-xs font-semibold text-slate-700 mb-1">পরীক্ষার তারিখ (টেক্সট / ফাঁকা)</label>
+              <input id="formExamDate" type="text" class="w-full px-3 py-2 rounded-xl border border-emerald-300 text-sm focus:outline-none focus:ring-2" placeholder="যেমন: ১২ ডিসেম্বর (বা ফাঁকা রাখুন)" />
+            </div>
+            <div>
+              <label for="formDeadline" class="block text-xs font-semibold text-slate-700 mb-1">ফরম পূরণের সময়সীমা</label>
+              <input id="formDeadline" type="text" class="w-full px-3 py-2 rounded-xl border border-emerald-300 text-sm focus:outline-none focus:ring-2" placeholder="যেমন: ১১ নভেম্বর - ২৫ নভেম্বর" />
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label for="formFeeText" class="block text-xs font-bold text-slate-700 mb-1">ফি বিবরণ (৳)</label>
+            <input id="formFeeText" type="text" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2" placeholder="যেমন: ১০৫০ বা ক- ১২০০, খ- ১৪০০" />
+          </div>
+          <div>
+            <label for="formFeeAmount" class="block text-xs font-bold text-slate-700 mb-1">হিসাবের জন্য ফি (সংখ্যায় ৳)</label>
+            <input id="formFeeAmount" type="number" min="0" step="10" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2" placeholder="1050" />
+          </div>
+        </div>
+
+        <div>
+          <label for="formCircularUrl" class="block text-xs font-bold text-slate-700 mb-1">বিশ্ববিদ্যালয়ের নিজস্ব অফিশিয়াল ভর্তি ওয়েবসাইট লিংক</label>
+          <input id="formCircularUrl" type="url" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2" placeholder="https://admission..." />
+        </div>
+
+        <!-- Personal Credentials Vault Section inside Modal -->
+        <div class="bg-amber-50/70 p-3.5 rounded-xl border border-amber-200 space-y-3">
+          <div class="text-xs font-bold text-amber-950">🔑 ব্যক্তিগত ইউজার আইডি, পাসওয়ার্ড ও রোল সংরক্ষণ (নিজ ডিভাইসে সেভ থাকবে)</div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div>
+              <label for="formUserId" class="block text-xs font-semibold text-slate-700 mb-1">User ID / Application ID</label>
+              <input id="formUserId" type="text" class="w-full px-3 py-2 rounded-xl border border-amber-300 text-sm focus:outline-none focus:ring-2" placeholder="ইউজার আইডি" />
+            </div>
+            <div>
+              <label for="formUserPass" class="block text-xs font-semibold text-slate-700 mb-1">Password / PIN</label>
+              <input id="formUserPass" type="text" class="w-full px-3 py-2 rounded-xl border border-amber-300 text-sm focus:outline-none focus:ring-2" placeholder="পাসওয়ার্ড / পিন" />
+            </div>
+            <div>
+              <label for="formExamRoll" class="block text-xs font-semibold text-slate-700 mb-1">ভর্তি রোল ও কেন্দ্র</label>
+              <input id="formExamRoll" type="text" class="w-full px-3 py-2 rounded-xl border border-amber-300 text-sm focus:outline-none focus:ring-2" placeholder="রোল নম্বর / পরীক্ষার কেন্দ্র" />
+            </div>
+          </div>
+          <div>
+            <label for="formNote" class="block text-xs font-semibold text-slate-700 mb-1">অতিরিক্ত নোট (ট্রানজেকশন আইডি / ইউনিট / অন্যান্য তথ্য)</label>
+            <textarea id="formNote" rows="2" class="w-full px-3 py-2 rounded-xl border border-amber-300 text-sm focus:outline-none focus:ring-2" placeholder="আপনার প্রয়োজনীয় নোট লিখুন..."></textarea>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-100">
+          <button type="button" id="btnCancelModal" class="px-4 py-2 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 transition">
+            বাতিল
+          </button>
+          <button type="submit" class="px-5 py-2 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm transition">
+            সংরক্ষণ করুন
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Circular & Official Admission Portal Modal -->
+  <div id="circularModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white rounded-2xl max-w-lg w-full p-5 sm:p-6 shadow-xl border border-slate-200 space-y-4 my-8">
+      <div class="flex items-start justify-between gap-3 border-b border-slate-100 pb-3">
+        <div>
+          <span id="circModalCategory" class="inline-block px-2.5 py-0.5 text-xs font-bold rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200 mb-1">বিজ্ঞান বিভাগ</span>
+          <h3 id="circModalTitle" class="text-base sm:text-lg font-bold text-slate-900">বিশ্ববিদ্যালয়ের বিস্তারিত তথ্য</h3>
+        </div>
+        <button type="button" id="btnCloseCircModal" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg">
+          <svg width="20" height="20" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="grid grid-cols-2 gap-3 text-xs sm:text-sm">
+        <div class="bg-slate-50 p-3 rounded-xl border border-slate-200/80">
+          <div class="text-slate-500 text-xs">পরীক্ষার তারিখ</div>
+          <div id="circModalExamDate" class="font-bold text-emerald-800 mt-0.5">-</div>
+          <div id="circModalCountdown" class="text-[11px] text-slate-500 mt-0.5">-</div>
+        </div>
+        <div class="bg-slate-50 p-3 rounded-xl border border-slate-200/80">
+          <div class="text-slate-500 text-xs">ফরম পূরণের সময়সীমা</div>
+          <div id="circModalDeadline" class="font-bold text-blue-700 mt-0.5">-</div>
+          <div id="circModalStatus" class="text-[11px] text-slate-500 mt-0.5">-</div>
+        </div>
+      </div>
+
+      <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200/80 space-y-1.5">
+        <div class="text-xs font-semibold text-slate-600">ইউনিট ও আবেদন ফি (৳):</div>
+        <div id="circModalFeeDetails" class="text-xs sm:text-sm font-bold text-slate-900">-</div>
+      </div>
+
+      <div class="bg-emerald-50/70 p-3.5 rounded-xl border border-emerald-200 space-y-2">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-bold text-emerald-950">অফিশিয়াল ভর্তি ওয়েবসাইট লিংক:</span>
+          <span class="text-[11px] text-emerald-800">কপি করে যেকোনো ব্রাউজারে ওপেন করুন</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <input id="circModalUrlInput" type="text" readonly class="w-full px-3 py-2 rounded-xl bg-white border border-emerald-200 text-xs text-slate-800 font-medium select-all focus:outline-none" value="" />
+          <button type="button" id="btnCopyCircUrl" class="shrink-0 px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition">
+            লিংক কপি করুন
+          </button>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap items-center justify-between gap-2 pt-3 border-t border-slate-100">
+        <button type="button" id="btnCircModalEdit" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 transition">
+          তথ্য / নোট এডিট করুন
+        </button>
+        <div class="flex items-center gap-2">
+          <button type="button" id="btnCancelCircModal" class="px-3.5 py-2 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 transition">
+            বন্ধ করুন
+          </button>
+          <a id="circModalExternalLink" href="https://admission.eis.du.ac.bd" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm transition">
+            <span>নতুন ট্যাবে খুলুন</span>
+            <svg width="14" height="14" class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Smart Circular Paste Modal -->
+  <div id="smartParserModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white rounded-2xl max-w-lg w-full p-5 sm:p-6 shadow-xl border border-slate-200 space-y-4 my-8">
+      <div class="flex items-start justify-between gap-3 border-b border-slate-100 pb-3">
+        <div>
+          <span class="px-2.5 py-0.5 text-[11px] font-bold rounded-full bg-amber-100 text-amber-800">স্মার্ট সার্কুলার ডিটেক্টর</span>
+          <h3 class="text-base font-bold text-slate-900 mt-1">ভর্তি বিজ্ঞপ্তির টেক্সট পেস্ট করে অটো-আপডেট</h3>
+          <p class="text-xs text-slate-500">যেকোনো নোটিশ বা ফেসবুক পোস্ট পেস্ট করলেই বিশ্ববিদ্যালয়, পরীক্ষার তারিখ ও ফরম পূরণের সময় অটো-সিঙ্ক হবে</p>
+        </div>
+        <button type="button" id="btnCloseSmartModal" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg">
+          <svg width="20" height="20" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <textarea
+        id="modalSmartPasteInput"
+        rows="5"
+        placeholder="ভর্তি বিজ্ঞপ্তির টেক্সট এখানে পেস্ট করুন... (যেমন: মেডিকেল ভর্তি পরীক্ষা ১৭ জানুয়ারি অনুষ্ঠিত হবে, আবেদন চলবে ২০ নভেম্বর - ৫ ডিসেম্বর পর্যন্ত)"
+        class="w-full p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs leading-relaxed focus:bg-white focus:outline-none focus:ring-2"
+      ></textarea>
+
+      <div id="modalParseResultBox" class="hidden p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-xs space-y-1 text-emerald-950"></div>
+
+      <div class="flex items-center justify-between gap-2 pt-2 border-t border-slate-100">
+        <button type="button" id="btnFillSampleModal" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-700">
+          নমুনা নোটিশ বসান
+        </button>
+        <div class="flex items-center gap-2">
+          <button type="button" id="btnCancelSmartModal" class="px-3.5 py-1.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100">বন্ধ করুন</button>
+          <button type="button" id="btnApplySmartModal" class="px-4 py-2 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm">⚡ অটো-আপডেট করুন</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirmation Modal -->
+  <div id="confirmModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-sm w-full p-5 shadow-xl border border-slate-200 space-y-4">
+      <h3 id="confirmModalTitle" class="text-base font-bold text-slate-900">নিশ্চিত করুন</h3>
+      <p id="confirmModalMessage" class="text-xs sm:text-sm text-slate-600">আপনি কি নিশ্চিতভাবে এটি করতে চান?</p>
+      <div class="flex items-center justify-end gap-2 pt-2">
+        <button type="button" id="btnConfirmCancel" class="px-3.5 py-1.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100">না, থাক</button>
+        <button type="button" id="btnConfirmProceed" class="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-rose-600 hover:bg-rose-700 text-white">হ্যাঁ, নিশ্চিত</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toastContainer" class="fixed bottom-4 right-4 z-50 pointer-events-none flex flex-col gap-2"></div>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-slate-200/80 mt-10 py-5 text-center text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
+      <span class="font-semibold text-slate-700">বিশ্ববিদ্যালয় ভর্তি পোর্টাল ও ট্র্যাকার ২০২৬-২০২৭ • শিক্ষার্থীদের সুবিধার্থে নির্মিত</span>
+      <span>সকল তথ্য, তারিখ ও আইডি/পাসওয়ার্ড আপনার নিজ ডিভাইসে স্বয়ংক্রিয়ভাবে সংরক্ষিত থাকে</span>
+    </div>
+  </footer>
+
+  
+
+
+  <!-- ==========================================================================
+       Modular JavaScript Architecture
+       ========================================================================== -->
+  <!-- 1. Data Layer -->
+  <script src="js/data/constants.js"></script>
+  <script src="js/data/universities.data.js"></script>
+  <script src="js/data/units.data.js"></script>
+  <script src="js/data/notices.data.js"></script>
+  <script src="js/data/checklist.data.js"></script>
+
+  <!-- 2. Utility Layer -->
+  <script src="js/utils/bengali.utils.js"></script>
+  <script src="js/utils/date.utils.js"></script>
+  <script src="js/utils/dom.utils.js"></script>
+
+  <!-- 3. State Management -->
+  <script src="js/state/state.js"></script>
+
+  <!-- 4. Feature Modules -->
+  <script src="js/features/countdown/countdown.js"></script>
+  <script src="js/features/directory/kpi.js"></script>
+  <script src="js/features/directory/directory.js"></script>
+  <script src="js/features/timeline/timeline.js"></script>
+  <script src="js/features/calendar/calendar.js"></script>
+  <script src="js/features/targets/targets.js"></script>
+  <script src="js/features/credentials/credentials.js"></script>
+  <script src="js/features/eligibility/eligibility.js"></script>
+  <script src="js/features/guide/guide.js"></script>
+  <script src="js/features/circular-parser/parser.js"></script>
+  <script src="js/features/export/export.js"></script>
+
+  <!-- 5. Modal Controllers -->
+  <script src="js/modals/modal-manager.js"></script>
+
+  <!-- 6. Application Bootstrap -->
+  <script src="js/app.js"></script>
+</body>
+</html>

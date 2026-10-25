@@ -1,0 +1,23 @@
+{
+  "name": "admission-portal-2026",
+  "version": "1.0.0",
+  "description": "এডমিশন পোর্টাল ও ট্র্যাকার ২০২৬-২০২৭ — সকল সরকারি ও শীর্ষ বেসরকারি বিশ্ববিদ্যালয়",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx serve . -l 3000",
+    "start": "npx serve . -l 3000",
+    "preview": "npx serve ."
+  },
+  "keywords": [
+    "bangladesh",
+    "admission",
+    "varsity-admission",
+    "du",
+    "buet",
+    "medical",
+    "gst",
+    "admission-tracker"
+  ],
+  "author": "MSHLIKHON",
+  "license": "MIT"
+}
