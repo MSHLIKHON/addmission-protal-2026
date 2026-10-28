@@ -552,6 +552,11 @@
 
       // Initialize Live University Notice Ticker & Auto-Sync
       initLiveNotices();
+
+      // Initialize Exclusive HSC 2026 Result Hub & Countdown
+      if (typeof initHscResultHub === "function") {
+        initHscResultHub();
+      }
     }
 
     let currentNoticeIndex = 0;
