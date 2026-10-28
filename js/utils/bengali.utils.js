@@ -86,13 +86,15 @@
         { keys: ["ডিসে", "dec"], m: 12, y: 2026 }
       ];
       const lower = eng.toLowerCase();
+      const explicitYearMatch = eng.match(/\b(202[6-9])\b/);
       for (const item of monthMap) {
         if (item.keys.some(k => lower.includes(k))) {
           const dayMatch = eng.match(/\b(\d{1,2})\b/);
           if (dayMatch) {
             const d = String(Math.min(31, Math.max(1, Number(dayMatch[1])))).padStart(2, "0");
             const m = String(item.m).padStart(2, "0");
-            return `${item.y}-${m}-${d}`;
+            const y = explicitYearMatch ? Number(explicitYearMatch[1]) : item.y;
+            return `${y}-${m}-${d}`;
           }
         }
       }

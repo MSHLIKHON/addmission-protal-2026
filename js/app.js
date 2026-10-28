@@ -479,7 +479,13 @@
       });
 
       // Smart Circular Parser Modal Listeners
-      const sampleNoticeText = "জাহাঙ্গীরনগর বিশ্ববিদ্যালয় (JU) ২০২৬-২০২৭ শিক্ষাবর্ষের ভর্তি পরীক্ষা আগামী ১০ জানুয়ারি থেকে ২১ জানুয়ারি ২০২৭ পর্যন্ত নিজস্ব ক্যাম্পাসে অনুষ্ঠিত হবে। আবেদন ফি ৮০০ টাকা। অনলাইনে ফরম পূরণ চলবে শীঘ্রই।";
+      const SAMPLE_CIRCULARS = {
+        ju: "জাহাঙ্গীরনগর বিশ্ববিদ্যালয় (JU) ২০২৬-২০২৭ শিক্ষাবর্ষের ভর্তি পরীক্ষা আগামী ১০ জানুয়ারি থেকে ২১ জানুয়ারি ২০২৭ পর্যন্ত নিজস্ব ক্যাম্পাসে অনুষ্ঠিত হবে। আবেদন ফি ৮০০ টাকা। অনলাইনে ফরম পূরণ চলবে শীঘ্রই।",
+        du: "ঢাকা বিশ্ববিদ্যালয় (DU): ২০২৬-২৭ শিক্ষাবর্ষের অনলাইন আবেদন ১১ নভেম্বর দুপুর ১২টায় শুরু ও ২৫ নভেম্বর রাত ১১:৫৯ মিনিটে শেষ হবে। ভর্তি পরীক্ষা আগামী ১২ ডিসেম্বর অনুষ্ঠিত হবে। ফি ১০৫০ টাকা।",
+        med: "মেডিকেল ও ডেন্টাল (MBBS/BDS) ভর্তি পরীক্ষা ৪ ডিসেম্বর ২০২৬ সকাল ১০টায় ১৭টি কেন্দ্রে অনুষ্ঠিত হবে। ফি ১০০০ টাকা।",
+        ru: "রাবির আবেদন ১২-২৭ নভেম্বর এবং ভর্তি পরীক্ষা ৮ জানুয়ারি ২০২৭। ফি ১৩২০ টাকা।",
+        agri: "কৃষি গুচ্ছ (৯টি সরকারি কৃষি বিশ্ববিদ্যালয়): ২০২৬-২৭ শিক্ষাবর্ষের ভর্তি পরীক্ষা আগামী ২ জানুয়ারি ২০২৭ অনুষ্ঠিত হবে। আবেদন ফি ১২০০ টাকা।"
+      };
 
       document.getElementById("btnSmartParserModal").addEventListener("click", () => {
         document.getElementById("smartParserModal").classList.remove("hidden");
@@ -491,16 +497,81 @@
         document.getElementById("smartParserModal").classList.add("hidden");
       });
       document.getElementById("btnFillSampleModal").addEventListener("click", () => {
-        document.getElementById("modalSmartPasteInput").value = sampleNoticeText;
+        document.getElementById("modalSmartPasteInput").value = SAMPLE_CIRCULARS.ju;
       });
+
+      document.querySelectorAll(".btn-sample-preset").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const key = btn.getAttribute("data-preset");
+          if (SAMPLE_CIRCULARS[key]) {
+            document.getElementById("modalSmartPasteInput").value = SAMPLE_CIRCULARS[key];
+            document.getElementById("btnApplySmartModal").click();
+          }
+        });
+      });
+
       document.getElementById("btnApplySmartModal").addEventListener("click", () => {
         const raw = document.getElementById("modalSmartPasteInput").value;
         const res = parseSmartCircularNotice(raw);
         const box = document.getElementById("modalParseResultBox");
         box.classList.remove("hidden");
         if (res.ok) {
-          box.innerHTML = `<div class="font-bold text-emerald-800">✅ ${t('অটো-আপডেট সম্পন্ন:', 'Auto-Updated:')} ${escapeHtml(getUniDisplayName(res.uni))}</div>
-            <div>${t('পরীক্ষার তারিখ:', 'Exam Date:')} <strong>${escapeHtml(res.examDate)}</strong> • ${t('আবেদনের সময়:', 'Deadline:')} <strong>${escapeHtml(res.deadline)}</strong> • ${t('ফি:', 'Fee:')} <strong>৳ ${escapeHtml(res.fee)}</strong></div>`;
+          box.innerHTML = `
+            <div class="space-y-2">
+              <div class="flex items-center justify-between gap-2 border-b border-emerald-200/80 pb-1.5">
+                <div class="font-bold text-emerald-900 flex items-center gap-1.5">
+                  <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                  <span>${escapeHtml(getUniDisplayName(res.uni))}</span>
+                </div>
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-600 text-white">শনাক্ত ও অটো-সিঙ্ক সম্পন্ন</span>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                <div class="bg-white p-2 rounded-lg border border-emerald-200 shadow-2xs">
+                  <span class="text-[10px] text-slate-500 font-medium block">ভর্তি পরীক্ষা:</span>
+                  <strong class="text-xs text-emerald-900">${escapeHtml(res.examDate || 'অপরিবর্তিত')}</strong>
+                </div>
+                <div class="bg-white p-2 rounded-lg border border-emerald-200 shadow-2xs">
+                  <span class="text-[10px] text-slate-500 font-medium block">আবেদনের সময়সীমা:</span>
+                  <strong class="text-xs text-emerald-900">${escapeHtml(res.deadline || 'অপরিবর্তিত')}</strong>
+                </div>
+                <div class="bg-white p-2 rounded-lg border border-emerald-200 shadow-2xs">
+                  <span class="text-[10px] text-slate-500 font-medium block">আবেদন ফি:</span>
+                  <strong class="text-xs text-emerald-900">${res.fee ? '৳ ' + escapeHtml(res.fee) : 'অপরিবর্তিত'}</strong>
+                </div>
+              </div>
+              <div class="flex items-center gap-2 pt-1">
+                <button type="button" class="btn-jump-card px-2.5 py-1 rounded-lg text-xs font-bold bg-emerald-700 hover:bg-emerald-800 text-white transition shadow-2xs" data-uni-id="${res.uni.id}">সরাসরি কার্ডে দেখুন ↗</button>
+                <button type="button" class="btn-jump-timeline px-2.5 py-1 rounded-lg text-xs font-semibold bg-white hover:bg-emerald-100 text-emerald-800 border border-emerald-300 transition">টাইমলাইনে দেখুন 📅</button>
+              </div>
+            </div>
+          `;
+
+          const jumpBtn = box.querySelector(".btn-jump-card");
+          if (jumpBtn) {
+            jumpBtn.addEventListener("click", () => {
+              document.getElementById("smartParserModal").classList.add("hidden");
+              switchMainTab("directory");
+              setTimeout(() => {
+                const targetCard = document.getElementById("uni-card-" + res.uni.id);
+                if (targetCard) {
+                  targetCard.scrollIntoView({ behavior: "smooth", block: "center" });
+                  targetCard.classList.add("ring-4", "ring-emerald-500", "ring-offset-2", "animate-pulse");
+                  setTimeout(() => {
+                    targetCard.classList.remove("ring-4", "ring-emerald-500", "ring-offset-2", "animate-pulse");
+                  }, 2500);
+                }
+              }, 120);
+            });
+          }
+
+          const calBtn = box.querySelector(".btn-jump-timeline");
+          if (calBtn) {
+            calBtn.addEventListener("click", () => {
+              document.getElementById("smartParserModal").classList.add("hidden");
+              switchMainTab("timeline");
+            });
+          }
+
           showToast(t(`${res.uni.name}-এর তথ্য স্মার্ট পার্সারের মাধ্যমে অটো-সিঙ্ক হয়েছে!`, `Updated ${getUniDisplayName(res.uni)} via Smart Parser!`));
         } else {
           box.innerHTML = `<div class="font-bold text-rose-700">⚠️ ${escapeHtml(res.message)}</div>`;
@@ -575,12 +646,48 @@
     function initLiveNotices() {
       renderNoticeTicker();
 
+      const tickerContainer = document.getElementById("liveNoticeTickerContainer");
+      const tickerSection = document.getElementById("liveNoticesBar");
       const prevBtn = document.getElementById("btnPrevNotice");
       const nextBtn = document.getElementById("btnNextNotice");
       const syncBtn = document.getElementById("btnSyncNotices");
       const modalBtn = document.getElementById("btnAllNoticesModal");
       const closeModalBtn = document.getElementById("btnCloseNoticesModal");
       const closeModalBottomBtn = document.getElementById("btnCloseNoticesModalBottom");
+
+      if (tickerContainer) {
+        tickerContainer.addEventListener("click", openAllNoticesModal);
+        tickerContainer.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            openAllNoticesModal();
+          }
+        });
+      }
+
+      function startRotateTimer() {
+        if (noticeRotateTimer) clearInterval(noticeRotateTimer);
+        noticeRotateTimer = setInterval(() => {
+          const feed = window.LIVE_NOTICES_FEED || [];
+          if (feed.length === 0) return;
+          currentNoticeIndex = (currentNoticeIndex + 1) % feed.length;
+          renderNoticeTicker();
+        }, 6500);
+      }
+
+      function stopRotateTimer() {
+        if (noticeRotateTimer) {
+          clearInterval(noticeRotateTimer);
+          noticeRotateTimer = null;
+        }
+      }
+
+      if (tickerSection) {
+        tickerSection.addEventListener("mouseenter", stopRotateTimer);
+        tickerSection.addEventListener("mouseleave", startRotateTimer);
+      }
+
+      startRotateTimer();
 
       if (prevBtn) {
         prevBtn.addEventListener("click", () => {
@@ -598,14 +705,6 @@
           renderNoticeTicker();
         });
       }
-
-      if (noticeRotateTimer) clearInterval(noticeRotateTimer);
-      noticeRotateTimer = setInterval(() => {
-        const feed = window.LIVE_NOTICES_FEED || [];
-        if (feed.length === 0) return;
-        currentNoticeIndex = (currentNoticeIndex + 1) % feed.length;
-        renderNoticeTicker();
-      }, 6000);
 
       if (syncBtn) {
         syncBtn.addEventListener("click", () => {
@@ -630,18 +729,91 @@
       if (!modal || !listEl) return;
 
       const feed = window.LIVE_NOTICES_FEED || [];
-      listEl.innerHTML = feed.map((notice) => {
-        const isJU = notice.includes("জাহাঙ্গীরনগর");
+      const unis = state.universities || [];
+
+      listEl.innerHTML = feed.map((notice, idx) => {
+        const isBreaking = notice.includes("ব্রেকিং") || notice.includes("জাহাঙ্গীরনগর");
+        let matchedUni = null;
+        if (notice.includes("জাহাঙ্গীরনগর") || notice.includes("JU")) matchedUni = unis.find(u => u.id === 2);
+        else if (notice.includes("ঢাকা বিশ্ববিদ্যালয়") || notice.includes("DU")) matchedUni = unis.find(u => u.id === 1);
+        else if (notice.includes("মেডিকেল") || notice.includes("MBBS")) matchedUni = unis.find(u => u.id === 9);
+        else if (notice.includes("কৃষি গুচ্ছ")) matchedUni = unis.find(u => u.id === 15);
+        else if (notice.includes("জিএসটি")) matchedUni = unis.find(u => u.id === 16);
+        else if (notice.includes("রাজশাহী") || notice.includes("রাবি")) matchedUni = unis.find(u => u.id === 4);
+        else if (notice.includes("বুয়েট") || notice.includes("BUET")) matchedUni = unis.find(u => u.id === 11);
+        else if (notice.includes("মেরিটাইম") || notice.includes("BMU")) matchedUni = unis.find(u => u.id === 23);
+
         return `
-          <div class="p-3.5 rounded-xl border ${isJU ? 'border-rose-300 bg-rose-50/70 ring-1 ring-rose-200' : 'border-slate-200 bg-slate-50'} flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5">
+          <div class="p-3.5 sm:p-4 rounded-xl border ${isBreaking ? 'border-rose-300 bg-rose-50/60 ring-1 ring-rose-200' : 'border-slate-200 bg-slate-50'} flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 transition">
             <div class="flex-1">
-              ${isJU ? '<span class="inline-block px-2 py-0.5 text-[10px] font-bold rounded bg-rose-600 text-white mb-1 shadow-2xs">সর্বশেষ ব্রেকিং সার্কুলার</span>' : ''}
-              <p class="text-xs sm:text-sm font-semibold text-slate-800 leading-snug">${escapeHtml(notice)}</p>
+              <div class="flex items-center gap-2 mb-1.5 flex-wrap">
+                ${isBreaking ? '<span class="inline-block px-2 py-0.5 text-[10px] font-bold rounded bg-rose-600 text-white shadow-2xs">সর্বশেষ ব্রেকিং সার্কুলার</span>' : '<span class="inline-block px-2 py-0.5 text-[10px] font-bold rounded bg-slate-200 text-slate-700">অফিসিয়াল বিজ্ঞপ্তি</span>'}
+                ${matchedUni ? `<span class="inline-block px-2 py-0.5 text-[10px] font-semibold rounded bg-emerald-100 text-emerald-800">${escapeHtml(matchedUni.name)}</span>` : ''}
+              </div>
+              <p class="text-xs sm:text-sm font-semibold text-slate-800 leading-relaxed">${escapeHtml(notice)}</p>
             </div>
-            ${isJU ? `<button type="button" data-action="open-circular" data-id="2" class="shrink-0 px-3 py-1.5 rounded-lg text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white transition shadow-2xs">জাবির পূর্ণ বিবরণ ↗</button>` : ''}
+            <div class="flex items-center gap-1.5 shrink-0 self-end sm:self-center flex-wrap">
+              <button type="button" class="btn-copy-notice px-2.5 py-1.5 rounded-lg text-xs font-medium bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 transition shadow-2xs" data-notice-idx="${idx}">
+                📋 কপি
+              </button>
+              <button type="button" class="btn-send-parser px-2.5 py-1.5 rounded-lg text-xs font-bold bg-amber-400 hover:bg-amber-300 text-slate-950 transition shadow-2xs" data-notice-idx="${idx}">
+                ⚡ স্মার্ট ডিটেক্টর
+              </button>
+              ${matchedUni ? `
+                <button type="button" class="btn-view-uni-card px-2.5 py-1.5 rounded-lg text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white transition shadow-2xs" data-uni-id="${matchedUni.id}">
+                  কার্ড ↗
+                </button>
+              ` : ''}
+            </div>
           </div>
         `;
       }).join("");
+
+      // Delegate Action Buttons in Notice Modal
+      listEl.querySelectorAll(".btn-copy-notice").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const idx = Number(btn.getAttribute("data-notice-idx"));
+          const text = feed[idx];
+          if (text) {
+            navigator.clipboard.writeText(text).then(() => {
+              showToast("📋 নোটিশের টেক্সট সফলভাবে কপি করা হয়েছে!");
+            }).catch(() => {
+              showToast("📋 নোটিশ টেক্সট: " + text.slice(0, 40) + "...");
+            });
+          }
+        });
+      });
+
+      listEl.querySelectorAll(".btn-send-parser").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const idx = Number(btn.getAttribute("data-notice-idx"));
+          const text = feed[idx];
+          if (text) {
+            closeAllNoticesModal();
+            document.getElementById("modalSmartPasteInput").value = text;
+            document.getElementById("smartParserModal").classList.remove("hidden");
+            document.getElementById("btnApplySmartModal").click();
+          }
+        });
+      });
+
+      listEl.querySelectorAll(".btn-view-uni-card").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const uniId = btn.getAttribute("data-uni-id");
+          closeAllNoticesModal();
+          switchMainTab("directory");
+          setTimeout(() => {
+            const card = document.getElementById("uni-card-" + uniId);
+            if (card) {
+              card.scrollIntoView({ behavior: "smooth", block: "center" });
+              card.classList.add("ring-4", "ring-emerald-500", "ring-offset-2", "animate-pulse");
+              setTimeout(() => {
+                card.classList.remove("ring-4", "ring-emerald-500", "ring-offset-2", "animate-pulse");
+              }, 2500);
+            }
+          }, 120);
+        });
+      });
 
       modal.classList.remove("hidden");
     }
@@ -652,7 +824,10 @@
     }
 
     function syncOfficialNotices(showUserToast = false) {
-      // 1. Ensure JU has the official announcement (10-21 January 2027)
+      const icon = document.getElementById("syncNoticesIcon");
+      if (icon) icon.classList.add("animate-spin");
+
+      // 1. Ensure JU has official syndicate test dates (10-21 January 2027)
       const ju = state.universities.find(u => u.id === 2);
       if (ju) {
         ju.examDateText = "১০ - ২১ জানুয়ারি ২০২৭ (নিজ ক্যাম্পাস)";
@@ -675,13 +850,42 @@
         ju.circularUrl = "https://juniv-admission.org";
       }
 
+      // 2. Ensure DU has published official dates
+      const du = state.universities.find(u => u.id === 1);
+      if (du) {
+        du.examDateText = "১২ ডিসেম্বর ২০২৬";
+        du.isoExamDate = "2026-12-12";
+        du.examMonthGroup = "2026-12";
+        du.deadlineText = "১১ নভেম্বর - ২৫ নভেম্বর ২০২৬";
+        du.hasDeadline = true;
+      }
+
+      // 3. Ensure Medical announcement
+      const med = state.universities.find(u => u.id === 9);
+      if (med) {
+        med.examDateText = "৪ ডিসেম্বর ২০২৬ (সম্ভাব্য)";
+        med.isoExamDate = "2026-12-04";
+        med.examMonthGroup = "2026-12";
+      }
+
+      // 4. Ensure Agri Cluster announcement
+      const agri = state.universities.find(u => u.id === 15);
+      if (agri) {
+        agri.examDateText = "২ জানুয়ারি ২০২৭";
+        agri.isoExamDate = "2027-01-02";
+        agri.examMonthGroup = "2027-01";
+      }
+
       saveUniversities();
       renderAll();
       renderNoticeTicker();
 
-      if (showUserToast) {
-        showToast("🔥 জাহাঙ্গীরনগর বিশ্ববিদ্যালয় (JU)-এর ১০-২১ জানুয়ারি ২০২৭ ভর্তি পরীক্ষার তারিখ সফলভাবে সিঙ্ক ও অটো-আপডেট হয়েছে!");
-      }
+      setTimeout(() => {
+        if (icon) icon.classList.remove("animate-spin");
+        if (showUserToast) {
+          showToast("🔥 সকল বিশ্ববিদ্যালয়ের সর্বশেষ অফিসিয়াল নোটিশ ও পরীক্ষার সময়সূচি সফলভাবে সিঙ্ক ও আপডেট হয়েছে!");
+        }
+      }, 600);
     }
 
     if (document.readyState === "loading") {
