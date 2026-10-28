@@ -45,9 +45,9 @@
             u.userPass = prev.userPass || "";
             u.examRoll = prev.examRoll || "";
             u.note = prev.note || "";
-            if (prev.customEdited) {
+            if (prev.customEdited && prev.isoExamDate && prev.isoExamDate !== "9999-12-31") {
               u.examDateText = prev.examDateText;
-              u.isoExamDate = prev.isoExamDate || "9999-12-31";
+              u.isoExamDate = prev.isoExamDate;
               u.examMonthGroup = prev.examMonthGroup || "unpublished";
               u.deadlineText = prev.deadlineText;
               u.hasDeadline = isDeadlineAnnounced(prev);

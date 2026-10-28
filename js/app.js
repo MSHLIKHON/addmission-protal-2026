@@ -479,7 +479,7 @@
       });
 
       // Smart Circular Parser Modal Listeners
-      const sampleNoticeText = "জাহাঙ্গীরনগর বিশ্ববিদ্যালয় (JU) ২০২৬-২০২৭ শিক্ষাবর্ষের ভর্তি পরীক্ষা আগামী ১৪ ফেব্রুয়ারি অনুষ্ঠিত হবে। অনলাইনে ফরম পূরণ চলবে ১০ ডিসেম্বর থেকে ৩০ ডিসেম্বর পর্যন্ত। আবেদন ফি ৮০০ টাকা।";
+      const sampleNoticeText = "জাহাঙ্গীরনগর বিশ্ববিদ্যালয় (JU) ২০২৬-২০২৭ শিক্ষাবর্ষের ভর্তি পরীক্ষা আগামী ১০ জানুয়ারি থেকে ২১ জানুয়ারি ২০২৭ পর্যন্ত নিজস্ব ক্যাম্পাসে অনুষ্ঠিত হবে। আবেদন ফি ৮০০ টাকা। অনলাইনে ফরম পূরণ চলবে শীঘ্রই।";
 
       document.getElementById("btnSmartParserModal").addEventListener("click", () => {
         document.getElementById("smartParserModal").classList.remove("hidden");
@@ -550,7 +550,133 @@
         }
       });
 
+      // Initialize Live University Notice Ticker & Auto-Sync
+      initLiveNotices();
+    }
 
+    let currentNoticeIndex = 0;
+    let noticeRotateTimer = null;
+
+    function renderNoticeTicker() {
+      const textEl = document.getElementById("liveNoticeTickerText");
+      if (!textEl || !window.LIVE_NOTICES_FEED || window.LIVE_NOTICES_FEED.length === 0) return;
+      textEl.style.opacity = "0";
+      setTimeout(() => {
+        textEl.textContent = window.LIVE_NOTICES_FEED[currentNoticeIndex];
+        textEl.style.opacity = "1";
+      }, 150);
+    }
+
+    function initLiveNotices() {
+      renderNoticeTicker();
+
+      const prevBtn = document.getElementById("btnPrevNotice");
+      const nextBtn = document.getElementById("btnNextNotice");
+      const syncBtn = document.getElementById("btnSyncNotices");
+      const modalBtn = document.getElementById("btnAllNoticesModal");
+      const closeModalBtn = document.getElementById("btnCloseNoticesModal");
+      const closeModalBottomBtn = document.getElementById("btnCloseNoticesModalBottom");
+
+      if (prevBtn) {
+        prevBtn.addEventListener("click", () => {
+          const feed = window.LIVE_NOTICES_FEED || [];
+          if (feed.length === 0) return;
+          currentNoticeIndex = (currentNoticeIndex - 1 + feed.length) % feed.length;
+          renderNoticeTicker();
+        });
+      }
+      if (nextBtn) {
+        nextBtn.addEventListener("click", () => {
+          const feed = window.LIVE_NOTICES_FEED || [];
+          if (feed.length === 0) return;
+          currentNoticeIndex = (currentNoticeIndex + 1) % feed.length;
+          renderNoticeTicker();
+        });
+      }
+
+      if (noticeRotateTimer) clearInterval(noticeRotateTimer);
+      noticeRotateTimer = setInterval(() => {
+        const feed = window.LIVE_NOTICES_FEED || [];
+        if (feed.length === 0) return;
+        currentNoticeIndex = (currentNoticeIndex + 1) % feed.length;
+        renderNoticeTicker();
+      }, 6000);
+
+      if (syncBtn) {
+        syncBtn.addEventListener("click", () => {
+          syncOfficialNotices(true);
+        });
+      }
+
+      if (modalBtn) {
+        modalBtn.addEventListener("click", openAllNoticesModal);
+      }
+      if (closeModalBtn) {
+        closeModalBtn.addEventListener("click", closeAllNoticesModal);
+      }
+      if (closeModalBottomBtn) {
+        closeModalBottomBtn.addEventListener("click", closeAllNoticesModal);
+      }
+    }
+
+    function openAllNoticesModal() {
+      const modal = document.getElementById("allNoticesModal");
+      const listEl = document.getElementById("allNoticesList");
+      if (!modal || !listEl) return;
+
+      const feed = window.LIVE_NOTICES_FEED || [];
+      listEl.innerHTML = feed.map((notice) => {
+        const isJU = notice.includes("জাহাঙ্গীরনগর");
+        return `
+          <div class="p-3.5 rounded-xl border ${isJU ? 'border-rose-300 bg-rose-50/70 ring-1 ring-rose-200' : 'border-slate-200 bg-slate-50'} flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5">
+            <div class="flex-1">
+              ${isJU ? '<span class="inline-block px-2 py-0.5 text-[10px] font-bold rounded bg-rose-600 text-white mb-1 shadow-2xs">সর্বশেষ ব্রেকিং সার্কুলার</span>' : ''}
+              <p class="text-xs sm:text-sm font-semibold text-slate-800 leading-snug">${escapeHtml(notice)}</p>
+            </div>
+            ${isJU ? `<button type="button" data-action="open-circular" data-id="2" class="shrink-0 px-3 py-1.5 rounded-lg text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white transition shadow-2xs">জাবির পূর্ণ বিবরণ ↗</button>` : ''}
+          </div>
+        `;
+      }).join("");
+
+      modal.classList.remove("hidden");
+    }
+
+    function closeAllNoticesModal() {
+      const modal = document.getElementById("allNoticesModal");
+      if (modal) modal.classList.add("hidden");
+    }
+
+    function syncOfficialNotices(showUserToast = false) {
+      // 1. Ensure JU has the official announcement (10-21 January 2027)
+      const ju = state.universities.find(u => u.id === 2);
+      if (ju) {
+        ju.examDateText = "১০ - ২১ জানুয়ারি ২০২৭ (নিজ ক্যাম্পাস)";
+        ju.isoExamDate = "2027-01-10";
+        ju.examMonthGroup = "2027-01";
+        ju.deadlineText = "শীঘ্রই ঘোষণা (সম্ভাব্য নভেম্বর-ডিসেম্বর)";
+        ju.hasDeadline = true;
+        ju.feeText = "A, B, C, D- ৮০০, E- ৭০০, C1/IBA- ৬০০";
+        ju.defaultFee = 800;
+        ju.feeOptions = [
+          { label: "A ইউনিট (বিজ্ঞান ও IIT) - ৳ ৮০০", amount: 800 },
+          { label: "D ইউনিট (জীববিজ্ঞান অনুষদ) - ৳ ৮০০", amount: 800 },
+          { label: "B ইউনিট (সমাজবিজ্ঞান ও আইন) - ৳ ৮০০", amount: 800 },
+          { label: "C ইউনিট (কলা ও মানবিক) - ৳ ৮০০", amount: 800 },
+          { label: "E ইউনিট (বিজনেস স্টাডিজ) - ৳ ৭০০", amount: 700 },
+          { label: "IBA-JU - ৳ ৬০০", amount: 600 },
+          { label: "C1 ইউনিট (নাট্যকলা ও চারুকলা) - ৳ ৬০০", amount: 600 },
+          { label: "A + D উভয় ইউনিট - ৳ ১৬০০", amount: 1600 }
+        ];
+        ju.circularUrl = "https://juniv-admission.org";
+      }
+
+      saveUniversities();
+      renderAll();
+      renderNoticeTicker();
+
+      if (showUserToast) {
+        showToast("🔥 জাহাঙ্গীরনগর বিশ্ববিদ্যালয় (JU)-এর ১০-২১ জানুয়ারি ২০২৭ ভর্তি পরীক্ষার তারিখ সফলভাবে সিঙ্ক ও অটো-আপডেট হয়েছে!");
+      }
     }
 
     if (document.readyState === "loading") {
@@ -563,4 +689,6 @@
   app.renderAll = window.renderAll = renderAll;
   app.switchMainTab = window.switchMainTab = switchMainTab;
   app.initAdmissionApp = window.initAdmissionApp = initAdmissionApp;
+  app.syncOfficialNotices = window.syncOfficialNotices = syncOfficialNotices;
+  app.initLiveNotices = window.initLiveNotices = initLiveNotices;
 })(window);
