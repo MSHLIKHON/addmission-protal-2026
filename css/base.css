@@ -1,7 +1,25 @@
 /* ==========================================================================
-   Base & Design System Tokens
+   Base & Design System Tokens (Dark Mode, Typography, Print & Custom Tokens)
    ========================================================================== */
 @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+:root {
+  --bg-page: #f8fafc;
+  --bg-card: #ffffff;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --border-card: #e2e8f0;
+  --accent-emerald: #059669;
+  --accent-amber: #d97706;
+}
+
+[data-theme="dark"] {
+  --bg-page: #0b1120;
+  --bg-card: #1e293b;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --border-card: #334155;
+}
 
 *, *::before, *::after {
   box-sizing: border-box;
@@ -12,23 +30,66 @@
 
 html {
   scroll-behavior: smooth;
-  line-height: 1.5;
+  line-height: 1.6;
   font-size: 14.5px;
   -webkit-text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased;
 }
 
 body {
-  font-family: 'Hind Siliguri', 'Plus Jakarta Sans', 'Noto Sans Bengali', 'Inter', system-ui, -apple-system, sans-serif;
-  background-color: #f8fafc;
+  font-family: 'Hind Siliguri', 'Plus Jakarta Sans', 'Noto Sans Bengali', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background-color: var(--bg-page);
   background-image: radial-gradient(at 0% 0%, rgba(16, 185, 129, 0.04) 0px, transparent 50%),
                     radial-gradient(at 100% 0%, rgba(14, 165, 233, 0.04) 0px, transparent 50%);
-  color: #0f172a;
+  color: var(--text-main);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   font-size: 0.9375rem;
   letter-spacing: -0.005em;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Dark Theme Overrides */
+[data-theme="dark"] body {
+  background-color: var(--bg-page);
+  color: var(--text-main);
+  background-image: none;
+}
+[data-theme="dark"] .bg-white {
+  background-color: var(--bg-card) !important;
+  color: var(--text-main);
+}
+[data-theme="dark"] .bg-slate-50,
+[data-theme="dark"] .bg-slate-50\/50,
+[data-theme="dark"] .bg-slate-50\/40,
+[data-theme="dark"] .bg-slate-50\/60,
+[data-theme="dark"] .bg-slate-50\/70,
+[data-theme="dark"] .bg-slate-50\/90 {
+  background-color: #0f172a !important;
+  color: #f1f5f9;
+}
+[data-theme="dark"] .text-slate-900,
+[data-theme="dark"] .text-slate-800,
+[data-theme="dark"] .text-slate-700 {
+  color: #f1f5f9 !important;
+}
+[data-theme="dark"] .text-slate-600,
+[data-theme="dark"] .text-slate-500 {
+  color: #94a3b8 !important;
+}
+[data-theme="dark"] .border-slate-200,
+[data-theme="dark"] .border-slate-200\/80,
+[data-theme="dark"] .border-slate-200\/60,
+[data-theme="dark"] .border-slate-100 {
+  border-color: #334155 !important;
+}
+[data-theme="dark"] input,
+[data-theme="dark"] select,
+[data-theme="dark"] textarea {
+  background-color: #1e293b !important;
+  color: #f1f5f9 !important;
+  border-color: #334155 !important;
 }
 
 a {
@@ -40,6 +101,7 @@ button, input, select, textarea {
   font: inherit;
   color: inherit;
   background: transparent;
+  min-height: 40px; /* Enhanced mobile tap targets >= 40-44px */
 }
 
 button {
@@ -76,4 +138,25 @@ svg {
 }
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: #64748b;
+}
+
+/* Print Friendly View */
+@media print {
+  header, footer, .countdown-banner, #hscResultBanner, #heroSummarySection, .mobile-bottom-nav, #btnExportCsv, #btnAddUniModal, #btnSmartParserModal, .no-print, [data-action="cycle-status"], #marksTabContent, .sticky {
+    display: none !important;
+  }
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-size: 11pt;
+  }
+  main {
+    padding: 0 !important;
+  }
+  .card, article {
+    border: 1px solid #94a3b8 !important;
+    page-break-inside: avoid;
+    box-shadow: none !important;
+    margin-bottom: 12px;
+  }
 }

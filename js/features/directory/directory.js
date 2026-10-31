@@ -193,6 +193,14 @@
                 <span>${escapeHtml(u.note)}</span>
               </div>
             ` : ''}
+
+            <!-- Data Freshness & Correction Trigger -->
+            <div class="flex items-center justify-between text-[11px] text-slate-500 pt-1 border-t border-slate-100">
+              <span>${t('সর্বশেষ আপডেট:', 'Updated:')} <strong class="text-slate-700">${(u.eligibility && u.eligibility.verifiedOn) ? u.eligibility.verifiedOn : 'অক্টোবর ২০২৬'}</strong></span>
+              <button type="button" data-action="edit-uni" data-id="${u.id}" class="text-emerald-700 hover:underline font-semibold">
+                ${t('তথ্য ভুল? সংশোধন ✏️', 'Edit info ✏️')}
+              </button>
+            </div>
           </div>
 
           <div class="pt-2.5 border-t border-slate-100 flex items-center justify-between gap-2 flex-wrap">
@@ -210,12 +218,22 @@
             <div class="flex items-center gap-1.5">
               <button
                 type="button"
+                data-action="open-marks"
+                data-id="${u.id}"
+                title="${t('নম্বর বণ্টন ও স্কোর ক্যালকুলেটর', 'Mark Distribution & Score Calculator')}"
+                class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-bold bg-emerald-50 text-emerald-800 hover:bg-emerald-100 border border-emerald-200 transition"
+              >
+                <span>📊 ${t('নম্বর', 'Marks')}</span>
+              </button>
+
+              <button
+                type="button"
                 data-action="edit-uni"
                 data-id="${u.id}"
                 title="${t('তারিখ বা ইউজার আইডি/পাসওয়ার্ড সংরক্ষণ করুন', 'Edit dates or save User ID/Password')}"
                 class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-bold ${hasCreds ? 'bg-amber-100 text-amber-900 border border-amber-300' : 'bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200'} transition"
               >
-                <span>🔑 ${t('আইডি/তারিখ', 'ID/Date')}</span>
+                <span>🔑 ${t('আইডি', 'ID')}</span>
               </button>
 
               <a

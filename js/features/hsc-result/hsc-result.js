@@ -21,41 +21,96 @@
     { code: "TEC", nameBn: "কারিগরি (Technical / BTEB)", prefix: "HSC" }
   ];
 
-  // Target HSC Result Date: 31 October 2026, 11:00 AM
-  const HSC_RESULT_TARGET = new Date(2026, 9, 31, 11, 0, 0);
+  function getHscTargetDate() {
+    const raw = app.HSC_RESULT_TARGET_DATE || "2026-10-31T11:00:00+06:00";
+    return new Date(raw);
+  }
 
   function getHscReferenceTime() {
-    const now = new Date();
-    if (now.getFullYear() === 2026) {
-      return now;
+    // Hidden demo mode strictly behind ?demo=1 for testing
+    try {
+      if (typeof window !== "undefined" && window.location) {
+        const params = new URLSearchParams(window.location.search);
+        if (params.get("demo") === "1") {
+          return new Date(getHscTargetDate().getTime() - (2 * 3600 * 1000 + 45 * 60 * 1000));
+        }
+      }
+    } catch (e) {
+      // Ignore URL parsing errors
     }
-    // Fallback simulation reference for testing outside 2026
-    return new Date(2026, 9, 28, 22, 40, 0);
+    return new Date();
+  }
+
+  function isHscBannerDismissed() {
+    try {
+      const key = app.STORAGE_KEY_HSC_BANNER_DISMISSED || "bd_hsc_banner_dismissed_v1";
+      return localStorage.getItem(key) === "true";
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function dismissHscBanner() {
+    try {
+      const key = app.STORAGE_KEY_HSC_BANNER_DISMISSED || "bd_hsc_banner_dismissed_v1";
+      localStorage.setItem(key, "true");
+    } catch (e) {
+      // Ignore storage errors
+    }
+    const banner = document.getElementById("hscResultBanner");
+    if (banner) {
+      banner.classList.add("hidden");
+    }
   }
 
   function tickHscLiveCountdown() {
+    const banner = document.getElementById("hscResultBanner");
+    if (!banner) return;
+
+    if (isHscBannerDismissed()) {
+      banner.classList.add("hidden");
+      return;
+    }
+
+    const refNow = getHscReferenceTime();
+    const target = getHscTargetDate();
+    const diffMs = target - refNow;
+
+    if (diffMs <= 0) {
+      // Result time has passed: collapse into a slim, dismissible strip
+      if (!banner.dataset.collapsed) {
+        banner.dataset.collapsed = "true";
+        banner.className = "relative overflow-hidden rounded-xl px-4 py-2.5 text-white shadow-sm border border-emerald-500/40 my-3";
+        banner.style.background = "linear-gradient(135deg, #064e3b 0%, #0f172a 100%)";
+        const isEn = Boolean(app.state && app.state.lang === "en");
+        banner.innerHTML = `
+          <div class="flex items-center justify-between gap-3">
+            <div class="flex items-center gap-2 min-w-0">
+              <span class="text-base sm:text-lg">🎉</span>
+              <span class="text-xs sm:text-sm font-bold truncate">${isEn ? "HSC 2026 Results Published — View Result & Marksheet" : "ফলাফল প্রকাশিত — রেজাল্ট দেখুন"}</span>
+            </div>
+            <div class="flex items-center gap-2 shrink-0">
+              <button id="btnSlimOpenHscModal" type="button" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-amber-400 hover:bg-amber-300 text-slate-950 transition shadow-xs">
+                ${isEn ? "View Result ↗" : "রেজাল্ট দেখুন ↗"}
+              </button>
+              <button id="btnDismissHscBanner" type="button" aria-label="${isEn ? 'Dismiss banner' : 'ব্যানার বন্ধ করুন'}" class="text-slate-300 hover:text-white px-2 py-1 text-sm font-bold transition">
+                ✕
+              </button>
+            </div>
+          </div>
+        `;
+        document.getElementById("btnSlimOpenHscModal")?.addEventListener("click", () => openHscResultModal("servers"));
+        document.getElementById("btnDismissHscBanner")?.addEventListener("click", dismissHscBanner);
+      }
+      return;
+    }
+
+    // Active countdown
     const dEl = document.getElementById("hscCdDays");
     const hEl = document.getElementById("hscCdHours");
     const mEl = document.getElementById("hscCdMins");
     const sEl = document.getElementById("hscCdSecs");
-    const statusEl = document.getElementById("hscCdStatusBadge");
-
     if (!dEl || !hEl || !mEl || !sEl) return;
-
-    const refNow = getHscReferenceTime();
-    const diffMs = HSC_RESULT_TARGET - refNow;
-
-    if (diffMs <= 0) {
-      dEl.textContent = "০০";
-      hEl.textContent = "০০";
-      mEl.textContent = "০০";
-      sEl.textContent = "০০";
-      if (statusEl) {
-        statusEl.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span><span>🎉 ফলাফল প্রকাশিত হয়েছে! এখনই দেখুন</span>`;
-        statusEl.className = "inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-400/40 animate-pulse";
-      }
-      return;
-    }
 
     const totalSecs = Math.floor(diffMs / 1000);
     const days = Math.floor(totalSecs / 86400);

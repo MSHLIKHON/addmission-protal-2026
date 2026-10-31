@@ -6,9 +6,14 @@
   <title>এডমিশন পোর্টাল ও ট্র্যাকার ২০২৬-২০২৭ — সকল সরকারি ও শীর্ষ বেসরকারি বিশ্ববিদ্যালয়</title>
   <meta name="description" content="বাংলাদেশ বিশ্ববিদ্যালয় ভর্তি পরীক্ষা ২০২৬-২০২৭ এর সকল সরকারি ও শীর্ষ বেসরকারি বিশ্ববিদ্যালয়ের পূর্ণাঙ্গ সময়সূচী, আবেদন ফি ও ট্র্যাকার।" />
   <meta name="theme-color" content="#064e3b" />
+  <link rel="manifest" href="manifest.webmanifest" />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎓</text></svg>" />
 
   <!-- Modular Stylesheet Bundle -->
+    <!-- Font preconnect & swap for slow/offline networks -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" />
   <link rel="stylesheet" href="css/main.css" />
 </head>
 <body class="custom-scrollbar">
@@ -28,6 +33,20 @@
           </div>
           <div>
             <div class="flex flex-wrap items-center gap-2">
+          <!-- Dark Mode Toggle Button -->
+          <button type="button" id="btnToggleTheme" title="থিম পরিবর্তন (ডার্ক / লাইট)" class="px-2.5 py-1.5 rounded-xl text-xs font-bold bg-white/10 hover:bg-white/20 text-white border border-white/15 transition flex items-center gap-1">
+            <span id="themeIcon">🌙</span>
+          </button>
+
+          <!-- Calendar Sync (.ics) -->
+          <button id="btnHeaderCalendarSync" type="button" title="টার্গেট পরীক্ষার ক্যালেন্ডার সিঙ্ক (.ics ডাউনলোড)" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-white/10 hover:bg-white/20 text-white border border-white/15 transition">
+            <span>📅 .ics সিঙ্ক</span>
+          </button>
+
+          <!-- Full Backup (.json) -->
+          <button id="btnHeaderBackup" type="button" title="সম্পূর্ণ তথ্যের ব্যাকআপ (.json)" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-white/10 hover:bg-white/20 text-white border border-white/15 transition">
+            <span>💾 ব্যাকআপ</span>
+          </button>
               <h1 id="lblAppTitle" class="text-lg sm:text-xl font-bold tracking-tight text-white">বিশ্ববিদ্যালয় ভর্তি পোর্টাল ও ট্র্যাকার ২০২৬-২০২৭</h1>
               <span id="lblAppBadge" class="px-2.5 py-0.5 text-[11px] font-bold rounded-full bg-emerald-400/20 text-emerald-200 border border-emerald-400/30">সরকারি + IUT + টপ ১০ প্রাইভেট</span>
             </div>
@@ -116,6 +135,14 @@
             <span id="navBadgeCreds" class="px-2 py-0.2 text-[11px] rounded-full bg-emerald-400 text-slate-950 font-bold">০</span>
           </button>
 
+                    <button type="button" data-main-tab="marks" class="main-tab-btn px-3.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition flex items-center gap-1.5 text-slate-200 hover:bg-white/10">
+            <svg width="16" height="16" class="w-4 h-4 text-emerald-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+            </svg>
+            <span id="navTabMarks">নম্বর বণ্টন ও স্কোর</span>
+            <span class="px-2 py-0.2 text-[10px] rounded-full bg-emerald-400 text-slate-950 font-bold">নতুন</span>
+          </button>
+
           <button type="button" data-main-tab="guide" class="main-tab-btn px-3.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition flex items-center gap-1.5 text-slate-200 hover:bg-white/10">
             <svg width="16" height="16" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -134,6 +161,36 @@
 
   <!-- Main Content Container -->
   <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-5 space-y-5">
+    <!-- Friendly Onboarding Welcome Card & Journey Progress -->
+    <section id="onboardingWelcomeCard" class="bg-gradient-to-r from-emerald-900 via-teal-900 to-slate-900 text-white rounded-2xl p-4 sm:p-5 shadow-sm border border-emerald-400/30 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+      <div class="space-y-1.5 flex-1">
+        <div class="flex items-center gap-2">
+          <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-400 text-slate-950 uppercase">শুরু করুন</span>
+          <h3 class="text-sm sm:text-base font-bold">ভর্তি প্রস্তুতি ৩-ধাপের সহজ গাইড</h3>
+        </div>
+        <p class="text-xs text-emerald-100">১. আপনার SSC ও HSC GPA দিন ➔ ২. পছন্দের বিশ্ববিদ্যালয় টার্গেট করুন ➔ ৩. ডেডলাইন ও নম্বর বণ্টন ট্র্যাক করুন</p>
+        <div class="flex items-center gap-2 pt-1 text-[11px] text-emerald-300">
+          <span>ভর্তি যাত্রা অগ্রগতি:</span>
+          <div class="w-32 bg-white/20 rounded-full h-2 overflow-hidden">
+            <div id="onboardingProgressBar" class="bg-amber-400 h-2 rounded-full w-2/5"></div>
+          </div>
+          <span id="onboardingProgressText" class="font-bold">২/৫ ধাপ সম্পন্ন</span>
+        </div>
+      </div>
+      <div class="flex items-center gap-2 shrink-0 self-end md:self-auto">
+        <button type="button" id="btnDismissOnboarding" class="text-xs text-slate-300 hover:text-white px-2 py-1">বুঝেছি, বন্ধ করুন ✕</button>
+      </div>
+    </section>
+
+    <!-- Collapsible Hero Control Bar -->
+    <div class="flex items-center justify-between px-1">
+      <span class="text-xs font-bold text-slate-500">📌 আজকের জরুরি সারসংক্ষেপ</span>
+      <button type="button" id="btnToggleHeroCollapse" class="text-xs text-emerald-700 hover:underline font-bold">
+        <span id="lblHeroCollapse">▲ সারসংক্ষেপ সংকুচিত করুন</span>
+      </button>
+    </div>
+
+    <div id="heroSummaryContainer" class="space-y-4">
 
     <!-- Live Breaking University Notice Ticker & Auto-Sync Bar -->
     <section id="liveNoticesBar" class="bg-gradient-to-r from-emerald-950 via-slate-900 to-emerald-950 text-white rounded-2xl p-3 sm:px-5 shadow-sm border border-emerald-500/30 flex flex-col md:flex-row items-center justify-between gap-3">
@@ -361,7 +418,19 @@
     <!-- ========================================== -->
     <!-- VIEW 1: DIRECTORY (CARDS & TABLE)          -->
     <!-- ========================================== -->
+    </div>
+
     <section id="viewDirectory" class="space-y-4">
+      <!-- Directory Quick Filter Chips -->
+      <div class="flex items-center gap-1.5 overflow-x-auto pb-1 custom-scrollbar text-xs font-semibold" aria-label="Quick Filter Chips">
+        <span class="text-slate-500 text-[11px] shrink-0 font-bold">ফিল্টার:</span>
+        <button type="button" data-chip-filter="all" class="chip-filter px-3 py-1 rounded-full bg-emerald-600 text-white shrink-0">সকল (৫২)</button>
+        <button type="button" data-chip-filter="science" class="chip-filter px-3 py-1 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 shrink-0">বিজ্ঞান</button>
+        <button type="button" data-chip-filter="humanities" class="chip-filter px-3 py-1 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 shrink-0">মানবিক</button>
+        <button type="button" data-chip-filter="business" class="chip-filter px-3 py-1 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 shrink-0">ব্যবসায়</button>
+        <button type="button" data-chip-filter="urgent" class="chip-filter px-3 py-1 rounded-full bg-rose-50 text-rose-700 border border-rose-200 hover:bg-rose-100 shrink-0">⏳ শেষ সময় ≤ ৭ দিন</button>
+        <button type="button" data-chip-filter="open" class="chip-filter px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100 shrink-0">🟢 আবেদন খোলা</button>
+      </div>
       <!-- Search, Filters & View Mode Bar -->
       <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/90 shadow-sm space-y-4">
         <div class="flex flex-col lg:flex-row gap-3">
@@ -772,6 +841,10 @@
       </div>
     </section>
 
+      <!-- Main Tab: Mark Distribution & Score Calculator -->
+    <section id="viewMarks" class="hidden space-y-6">
+      <div id="marksTabContent"></div>
+    </section>
   </main>
 
   <!-- Edit / Add University & Credentials Modal (With Auto-Sync Date Picker) -->
@@ -1008,6 +1081,55 @@
       <div class="flex items-center justify-end gap-2 pt-2">
         <button type="button" id="btnConfirmCancel" class="px-3.5 py-1.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100">না, থাক</button>
         <button type="button" id="btnConfirmProceed" class="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-rose-600 hover:bg-rose-700 text-white">হ্যাঁ, নিশ্চিত</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CSV Export Options Modal -->
+  <div id="exportModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-sm w-full p-5 shadow-xl border border-slate-200 space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <h3 id="lblExportModalTitle" class="text-base font-bold text-slate-900">CSV এক্সপোর্ট অপশন</h3>
+        <button type="button" id="btnCloseExportModal" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg">✕</button>
+      </div>
+      <p id="lblExportModalDesc" class="text-xs text-slate-600">ভর্তি ট্র্যাকারের তথ্যাদি এক্সেল-সামঞ্জস্যপূর্ণ UTF-8 BOM সহ CSV ফাইল আকারে ডাউনলোড হবে।</p>
+      <div class="p-3 bg-amber-50 rounded-xl border border-amber-200 space-y-1">
+        <label class="flex items-center gap-2 cursor-pointer text-xs font-semibold text-slate-800">
+          <input type="checkbox" id="chkIncludePasswords" class="rounded text-emerald-600 focus:ring-emerald-500" />
+          <span id="lblIncludePass">পাসওয়ার্ডসহ এক্সপোর্ট করুন (ঐচ্ছিক)</span>
+        </label>
+        <p class="text-[11px] text-amber-800" id="lblPassSecurityNote">⚠️ নিরাপত্তার স্বার্থে পাসওয়ার্ড ডিফল্টভাবে বাদ দিয়ে এক্সপোর্ট করা হয়।</p>
+      </div>
+      <div class="flex items-center justify-end gap-2 pt-2">
+        <button type="button" id="btnCancelExport" class="px-3.5 py-1.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100">বাতিল</button>
+        <button type="button" id="btnConfirmExportCsv" class="px-4 py-2 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white shadow-xs">ডাউনলোড করুন</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Vault Passphrase Setup / Manage Modal -->
+  <div id="vaultPassModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-sm w-full p-5 shadow-xl border border-slate-200 space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <h3 id="vaultModalTitle" class="text-base font-bold text-slate-900">ভল্ট পাসফ্রেজ এনক্রিপশন</h3>
+        <button type="button" id="btnCloseVaultPassModal" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg">✕</button>
+      </div>
+      <p id="vaultModalDesc" class="text-xs text-slate-600">আপনার সংরক্ষিত পাসওয়ার্ডগুলো WebCrypto AES-256 দিয়ে ব্রাউজারে সুরক্ষিত থাকবে।</p>
+      <div id="vaultPassInputContainer" class="space-y-2">
+        <label class="block text-[11px] font-bold text-slate-700">মাস্টার পাসফ্রেজ (কমপক্ষে ৪ অক্ষর)</label>
+        <div class="relative">
+          <input
+            type="password"
+            id="txtNewVaultPass"
+            placeholder="গোপন পাসফ্রেজ লিখুন..."
+            class="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500"
+          />
+        </div>
+        <p id="vaultPassError" class="text-xs text-rose-600 font-bold hidden"></p>
+      </div>
+      <div class="flex items-center justify-end gap-2 pt-2">
+        <button type="button" id="btnCancelVaultPass" class="px-3.5 py-1.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100">বাতিল</button>
+        <button type="button" id="btnConfirmVaultPass" class="px-4 py-2 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white shadow-xs">সংরক্ষণ করুন</button>
       </div>
     </div>
   </div>
@@ -1257,6 +1379,9 @@
       <span class="font-semibold text-slate-700">বিশ্ববিদ্যালয় ভর্তি পোর্টাল ও ট্র্যাকার ২০২৬-২০২৭ • শিক্ষার্থীদের সুবিধার্থে নির্মিত</span>
       <span>সকল তথ্য, তারিখ ও আইডি/পাসওয়ার্ড আপনার নিজ ডিভাইসে স্বয়ংক্রিয়ভাবে সংরক্ষিত থাকে</span>
     </div>
+  <p class="text-xs text-slate-400 mt-2 font-mono-num">
+        ডাটা সংস্করণ: v2026.2.1 • অফিসিয়াল সার্কুলার হালনাগাদ: ৩১ অক্টোবর ২০২৬ • Hind Siliguri বাংলা ফন্ট ও WebCrypto AES-256 সুরক্ষিত
+      </p>
   </footer>
 
   
@@ -1276,6 +1401,7 @@
   <script src="js/utils/bengali.utils.js"></script>
   <script src="js/utils/date.utils.js"></script>
   <script src="js/utils/dom.utils.js"></script>
+  <script src="js/utils/crypto.utils.js"></script>
 
   <!-- 3. State Management -->
   <script src="js/state/state.js"></script>
@@ -1293,11 +1419,70 @@
   <script src="js/features/circular-parser/parser.js"></script>
   <script src="js/features/export/export.js"></script>
   <script src="js/features/hsc-result/hsc-result.js"></script>
+  <script src="js/data/marks.data.js"></script>
+  <script src="js/features/marks/marks.js"></script>
+  <script src="js/features/backup/backup.js"></script>
+  <script src="js/features/calendar-sync/calendar-sync.js"></script>
 
   <!-- 5. Modal Controllers -->
   <script src="js/modals/modal-manager.js"></script>
 
   <!-- 6. Application Bootstrap -->
   <script src="js/app.js"></script>
+  <!-- Mobile Bottom Navigation Bar (< 768px) -->
+  <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 z-40 flex items-center justify-around py-1.5 px-2 text-center shadow-lg" aria-label="Mobile Navigation">
+    <button type="button" data-mobile-nav="directory" class="mobile-nav-btn flex flex-col items-center py-1 px-2 text-emerald-600 font-bold text-[10px]">
+      <span class="text-base">🏛️</span>
+      <span>তালিকা</span>
+    </button>
+    <button type="button" data-mobile-nav="timeline" class="mobile-nav-btn flex flex-col items-center py-1 px-2 text-slate-500 font-bold text-[10px]">
+      <span class="text-base">📅</span>
+      <span>ক্যালেন্ডার</span>
+    </button>
+    <button type="button" data-mobile-nav="targets" class="mobile-nav-btn flex flex-col items-center py-1 px-2 text-slate-500 font-bold text-[10px]">
+      <span class="text-base">⭐</span>
+      <span>টার্গেট</span>
+    </button>
+    <button type="button" data-mobile-nav="marks" class="mobile-nav-btn flex flex-col items-center py-1 px-2 text-slate-500 font-bold text-[10px]">
+      <span class="text-base">📊</span>
+      <span>নম্বর</span>
+    </button>
+    <button type="button" data-mobile-nav="more" class="mobile-nav-btn flex flex-col items-center py-1 px-2 text-slate-500 font-bold text-[10px]">
+      <span class="text-base">⋯</span>
+      <span>আরও</span>
+    </button>
+  </nav>
+
+  <!-- More Options Sheet / Modal for Mobile -->
+  <div id="moreOptionsModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-end sm:items-center justify-center p-0 sm:p-4">
+    <div class="bg-white rounded-t-3xl sm:rounded-2xl max-w-sm w-full p-5 shadow-2xl border border-slate-200 space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <h3 class="text-base font-bold text-slate-900">আরও সুবিধাসমূহ</h3>
+        <button type="button" id="btnCloseMoreModal" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg">✕</button>
+      </div>
+      <div class="grid grid-cols-2 gap-2.5 text-xs font-bold">
+        <button type="button" id="btnMoreJumpCreds" class="p-3 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-left flex items-center gap-2">
+          <span>🔑</span><span>আইডি/পাসওয়ার্ড</span>
+        </button>
+        <button type="button" id="btnMoreJumpElig" class="p-3 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-left flex items-center gap-2">
+          <span>🎯</span><span>GPA যোগ্যতা</span>
+        </button>
+        <button type="button" id="btnMoreJumpGuide" class="p-3 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-left flex items-center gap-2">
+          <span>📋</span><span>প্রস্তুতি চেকলিস্ট</span>
+        </button>
+        <button type="button" id="btnMoreIcsSync" class="p-3 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-left flex items-center gap-2">
+          <span>📅</span><span>ক্যালেন্ডার (.ics)</span>
+        </button>
+        <button type="button" id="btnMoreBackup" class="p-3 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-left flex items-center gap-2">
+          <span>💾</span><span>ব্যাকআপ এক্সপোর্ট</span>
+        </button>
+        <button type="button" id="btnMoreRestore" class="p-3 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-left flex items-center gap-2">
+          <span>📥</span><span>ব্যাকআপ রিস্টোর</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <input type="file" id="fileInputRestoreJson" accept=".json" class="hidden" />
 </body>
 </html>

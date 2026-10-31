@@ -7,17 +7,17 @@
   const app = window.AdmissionApp = window.AdmissionApp || {};
 
     function toBengaliNumber(num) {
-      if (state && state.lang === "en") return String(num);
+      if (typeof state !== "undefined" && state && state.lang === "en") return String(num);
       const bnDigits = ["০", "১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯"];
       return String(num).replace(/\d/g, d => bnDigits[Number(d)]);
     }
 
     function t(bnText, enText) {
-      return (state && state.lang === "en") ? enText : bnText;
+      return (typeof state !== "undefined" && state && state.lang === "en") ? enText : bnText;
     }
 
     function getUniDisplayName(u) {
-      if (state && state.lang === "en" && UNI_NAMES_EN[u.id] && !u.customEdited) {
+      if (typeof state !== "undefined" && state && state.lang === "en" && typeof UNI_NAMES_EN !== "undefined" && UNI_NAMES_EN[u.id] && !u.customEdited) {
         return UNI_NAMES_EN[u.id];
       }
       return u.name;

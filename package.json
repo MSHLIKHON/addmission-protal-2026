@@ -1,12 +1,14 @@
 {
   "name": "admission-portal-2026",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "এডমিশন পোর্টাল ও ট্র্যাকার ২০২৬-২০২৭ — সকল সরকারি ও শীর্ষ বেসরকারি বিশ্ববিদ্যালয়",
   "main": "index.html",
   "scripts": {
     "dev": "npx serve . -l 3000",
     "start": "npx serve . -l 3000",
-    "preview": "npx serve ."
+    "preview": "npx serve .",
+    "test": "node --test tests/phase1.test.mjs tests/phase2_3.test.mjs",
+    "lint": "node -c js/app.js js/data/*.js js/utils/*.js js/features/**/*.js sw.js"
   },
   "keywords": [
     "bangladesh",

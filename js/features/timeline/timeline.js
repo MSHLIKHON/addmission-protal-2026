@@ -23,6 +23,7 @@
               <span class="inline-block px-2.5 py-0.5 text-[11px] font-bold rounded-md border ${c.badgeClass}">${escapeHtml(c.badge)}</span>
               <h3 class="text-sm font-bold text-slate-900 mt-2">${escapeHtml(c.title)}</h3>
               <p class="text-xs text-slate-600 mt-1 leading-relaxed">${escapeHtml(c.desc)}</p>
+              ${c.suggestion ? `<div class="p-2 bg-slate-50 border border-slate-200 rounded-lg text-[11px] text-slate-700 font-medium mt-2">${escapeHtml(c.suggestion)}</div>` : ''}
             </div>
           </div>
         `).join("");

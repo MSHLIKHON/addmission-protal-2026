@@ -54,6 +54,16 @@
 
                 <button
                   type="button"
+                  data-action="open-marks"
+                  data-id="${u.id}"
+                  title="${(state && state.lang === 'en') ? 'View Mark Distribution' : 'নম্বর বণ্টন ও স্কোর দেখুন'}"
+                  class="px-2.5 py-1.5 rounded-xl text-xs font-bold bg-emerald-50 text-emerald-800 hover:bg-emerald-100 border border-emerald-200 transition"
+                >
+                  📊 ${(state && state.lang === 'en') ? 'Marks' : 'নম্বর'}
+                </button>
+
+                <button
+                  type="button"
                   data-action="cycle-status"
                   data-id="${u.id}"
                   class="px-3 py-1.5 rounded-xl text-xs font-bold border ${(STATUS_META[u.status] || STATUS_META.pending).btnClass}"

@@ -6,9 +6,83 @@
   'use strict';
   const app = window.AdmissionApp = window.AdmissionApp || {};
 
-    function U(id, serialBn, name, keywords, category, examDateText, isoExamDate, deadlineText, feeText, defaultFee, feeOptions, circularUrl) {
+function resolveDefaultEligibility(id, category, circularUrl) {
+      if (id === 11) {
+        return {
+          minSsc: 4.0, minHsc: 5.0, minTotal: 9.0, secondTimer: false,
+          groups: ['science'],
+          notes: 'SSC ৪.০০ + HSC ৫.০০ (মোট ৯.০০, শুধু ১ম বার বিজ্ঞান)',
+          source: 'http://ugadmission.buet.ac.bd',
+          verifiedOn: '2026-10-25'
+        };
+      }
+      if ([12, 13, 14].includes(id)) {
+        return {
+          minSsc: 4.0, minHsc: 4.5, minTotal: 8.5, secondTimer: false,
+          groups: ['science'],
+          notes: 'SSC ৪.০০ + HSC ৪.৫০ (বিজ্ঞান, ১ম বার)',
+          source: circularUrl || null,
+          verifiedOn: '2026-10-25'
+        };
+      }
+      if ([8, 19, 20].includes(id)) {
+        return {
+          minSsc: 4.0, minHsc: 4.5, minTotal: 8.5, secondTimer: true,
+          groups: ['science'],
+          notes: 'SSC ৪.০০ + HSC ৪.৫০ (বিজ্ঞান, ২য় বার সুযোগ রয়েছে)',
+          source: circularUrl || null,
+          verifiedOn: '2026-10-25'
+        };
+      }
+      if ([9, 10].includes(id)) {
+        return {
+          minSsc: 4.0, minHsc: 4.0, minTotal: 9.0, secondTimer: true,
+          groups: ['science'],
+          notes: 'SSC + HSC মোট জিপিএ ৯.০০ (জীববিজ্ঞানসহ বিজ্ঞান, ২য় বার সুযোগ রয়েছে)',
+          source: circularUrl || null,
+          verifiedOn: '2026-10-25'
+        };
+      }
+      if ([15, 30, 31, 32, 33].includes(id)) {
+        return {
+          minSsc: 4.0, minHsc: 4.0, minTotal: 8.5, secondTimer: true,
+          groups: ['science'],
+          notes: 'SSC + HSC মোট ৮.৫০ (প্রতিটিতে ৪.০০, ২য় বার সুযোগ রয়েছে)',
+          source: circularUrl || null,
+          verifiedOn: '2026-10-25'
+        };
+      }
+      if (id === 1) {
+        return {
+          minSsc: 3.5, minHsc: 3.5, minTotal: 8.0, secondTimer: false,
+          groups: ['science', 'humanities', 'business'],
+          notes: 'বিজ্ঞান: মোট ৮.০০, মানবিক/বাণিজ্য: ৭.৫০ (শুধু ১ম বার)',
+          source: 'https://admission.eis.du.ac.bd',
+          verifiedOn: '2026-10-25'
+        };
+      }
+      if (category === 'private') {
+        return {
+          minSsc: 2.5, minHsc: 2.5, minTotal: 6.0, secondTimer: true,
+          groups: ['science', 'humanities', 'business'],
+          notes: 'ন্যূনতম SSC ২.৫০ + HSC ২.৫০ (মোট ৬.০০, সকল বিভাগ)',
+          source: circularUrl || null,
+          verifiedOn: '2026-10-25'
+        };
+      }
+      return {
+        minSsc: 3.5, minHsc: 3.5, minTotal: 7.5, secondTimer: true,
+        groups: ['science', 'humanities', 'business'],
+        notes: 'ন্যূনতম মোট জিপিএ ৭.৫০ - ৮.০০ (২য় বার আবেদনের সুযোগ রয়েছে)',
+        source: circularUrl || null,
+        verifiedOn: '2026-10-25'
+      };
+    }
+
+    function U(id, serialBn, name, keywords, category, examDateText, isoExamDate, deadlineText, feeText, defaultFee, feeOptions, circularUrl, eligibility) {
       const monthGroup = (!isoExamDate || isoExamDate === "9999-12-31") ? "unpublished" : isoExamDate.slice(0, 7);
       const hasDeadline = Boolean(deadlineText && deadlineText.trim() !== "" && !deadlineText.includes("অপ্রকাশিত") && !deadlineText.includes("ফাঁকা"));
+      const resolvedEligibility = eligibility || resolveDefaultEligibility(id, category, circularUrl);
       return {
         id, serialBn, name, keywords, category,
         examDateText: examDateText || "",
@@ -19,14 +93,16 @@
         feeText: feeText || "১০০০",
         defaultFee: defaultFee || 1000,
         selectedFee: defaultFee || 1000,
-        feeOptions: feeOptions || [{ label: `${feeText} - ৳ ${defaultFee}`, amount: defaultFee }],
+        feeOptions: feeOptions || [{ label: (feeText + " - ৳ " + defaultFee), amount: defaultFee }],
         circularUrl,
         status: "pending",
         target: false,
         userId: "",
         userPass: "",
         examRoll: "",
-        note: ""
+        note: "",
+        isCustom: false,
+        eligibility: resolvedEligibility
       };
     }
 

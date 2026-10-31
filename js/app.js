@@ -76,6 +76,7 @@
       renderTargetsView();
       renderGuideView();
       renderEligibilityView();
+      if (typeof renderMarksMainTab === "function") renderMarksMainTab();
     }
 
     function switchMainTab(tabName) {
@@ -86,7 +87,8 @@
         credentials: document.getElementById("viewCredentials"),
         targets: document.getElementById("viewTargets"),
         guide: document.getElementById("viewGuide"),
-        eligibility: document.getElementById("viewEligibility")
+        eligibility: document.getElementById("viewEligibility"),
+        marks: document.getElementById("viewMarks")
       };
       Object.entries(views).forEach(([k, el]) => {
         if (el) el.classList.toggle("hidden", k !== tabName);
@@ -100,6 +102,20 @@
           btn.className = "main-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap transition flex items-center gap-2 text-slate-200 hover:bg-white/10";
         }
       });
+
+      // Highlight matching mobile bottom nav button
+      document.querySelectorAll("[data-mobile-nav]").forEach(mBtn => {
+        const mTab = mBtn.getAttribute("data-mobile-nav");
+        if (mTab === tabName) {
+          mBtn.className = "mobile-nav-btn flex flex-col items-center py-1 px-2 text-emerald-600 font-bold text-[10px]";
+        } else if (mTab !== "more") {
+          mBtn.className = "mobile-nav-btn flex flex-col items-center py-1 px-2 text-slate-500 font-bold text-[10px]";
+        }
+      });
+
+      if (tabName === "marks" && typeof renderMarksMainTab === "function") {
+        renderMarksMainTab();
+      }
     }
 
 
@@ -231,7 +247,7 @@
         renderCredentialsView();
       });
 
-      document.body.addEventListener("input", e => {
+      document.body.addEventListener("input", async e => {
         const credInput = e.target.closest("[data-cred-field]");
         if (!credInput) return;
         const id = Number(credInput.getAttribute("data-id"));
@@ -239,6 +255,17 @@
         const uni = state.universities.find(u => u.id === id);
         if (uni && field) {
           uni[field] = credInput.value;
+          if (field === "userPass") {
+            const vc = app.VaultCrypto;
+            if (vc && vc.isVaultConfigured() && vc.getActivePassphrase()) {
+              uni.__encPass = await vc.encryptString(credInput.value, vc.getActivePassphrase());
+            } else if (vc && !vc.isVaultConfigured() && !vc.hasSeenVaultWarning() && credInput.value) {
+              const isEn = state.lang === "en";
+              showToast(isEn ? "Security Notice: Passwords are saved only on this device, unencrypted." : "⚠️ সতর্কতা: পাসওয়ার্ড শুধু এই ডিভাইসে সংরক্ষিত, এনক্রিপ্টেড নয়।");
+              vc.markVaultWarningSeen();
+              renderCredentialsView();
+            }
+          }
           saveUniversities();
           updateKPIs();
         }
@@ -255,6 +282,14 @@
         const actionBtn = e.target.closest("[data-action]");
         if (!actionBtn) return;
         const action = actionBtn.getAttribute("data-action");
+
+        if (action === "open-marks") {
+          const uniId = Number(actionBtn.getAttribute("data-id"));
+          if (typeof openMarksForUni === "function") {
+            openMarksForUni(uniId);
+          }
+          return;
+        }
 
         if (action === "copy-text") {
           const text = actionBtn.getAttribute("data-copy");
@@ -421,7 +456,8 @@
             showToast(`${name}-এর তারিখ ও তথ্য অটো-সিঙ্ক সম্পন্ন হয়েছে!`);
           }
         } else {
-          const newId = state.universities.reduce((max, u) => Math.max(max, u.id), 0) + 1;
+          const maxNumId = state.universities.reduce((max, u) => Math.max(max, typeof u.id === "number" ? u.id : 0), 0);
+          const newId = maxNumId + 1;
           state.universities.push({
             id: newId,
             serialBn: toBengaliNumber(newId),
@@ -436,7 +472,7 @@
             feeText,
             defaultFee: feeAmount,
             selectedFee: feeAmount,
-            feeOptions: [{ label: `${feeText} - ৳ ${feeAmount}`, amount: feeAmount }],
+            feeOptions: [{ label: (feeText + " - ৳ " + feeAmount), amount: feeAmount }],
             circularUrl,
             status,
             target: true,
@@ -444,7 +480,15 @@
             userPass,
             examRoll,
             note,
-            customEdited: true
+            isCustom: true,
+            customEdited: true,
+            eligibility: {
+              minSsc: 2.5, minHsc: 2.5, minTotal: 6.0, secondTimer: true,
+              groups: ["science", "humanities", "business"],
+              notes: "অফিসিয়াল সার্কুলার দেখুন",
+              source: circularUrl || null,
+              verifiedOn: null
+            }
           });
           showToast(`${name} তালিকায় যুক্ত ও অটো-সিঙ্ক করা হয়েছে!`);
         }
@@ -462,7 +506,61 @@
         closeConfirmModal();
       });
 
-      document.getElementById("btnExportCsv").addEventListener("click", exportToCsv);
+      document.getElementById("btnExportCsv").addEventListener("click", () => {
+        if (typeof openExportModal === "function") {
+          openExportModal();
+        } else {
+          exportToCsv(false);
+        }
+      });
+      document.getElementById("btnCloseExportModal")?.addEventListener("click", closeExportModal);
+      document.getElementById("btnCancelExport")?.addEventListener("click", closeExportModal);
+      document.getElementById("btnConfirmExportCsv")?.addEventListener("click", () => {
+        const chk = document.getElementById("chkIncludePasswords");
+        exportToCsv(Boolean(chk && chk.checked));
+        closeExportModal();
+      });
+
+      document.getElementById("btnCloseVaultPassModal")?.addEventListener("click", closeVaultPassModal);
+      document.getElementById("btnCancelVaultPass")?.addEventListener("click", closeVaultPassModal);
+      document.getElementById("btnConfirmVaultPass")?.addEventListener("click", async () => {
+        const modal = document.getElementById("vaultPassModal");
+        const mode = modal ? modal.dataset.mode : "setup";
+        const isEn = state.lang === "en";
+        const errEl = document.getElementById("vaultPassError");
+
+        if (mode === "setup") {
+          const pass = document.getElementById("txtNewVaultPass")?.value;
+          if (!pass || pass.trim().length < 4) {
+            if (errEl) {
+              errEl.textContent = isEn ? "Passphrase must be at least 4 characters." : "পাসফ্রেজ কমপক্ষে ৪ অক্ষরের হতে হবে।";
+              errEl.classList.remove("hidden");
+            }
+            return;
+          }
+          if (errEl) errEl.classList.add("hidden");
+
+          await app.VaultCrypto.setupVaultPassphrase(pass.trim());
+          for (const u of state.universities) {
+            if (u.userPass) {
+              u.__encPass = await app.VaultCrypto.encryptString(u.userPass, pass.trim());
+            }
+          }
+          saveUniversities();
+          closeVaultPassModal();
+          renderCredentialsView();
+          showToast(isEn ? "Vault passphrase encryption enabled!" : "ভল্ট পাসফ্রেজ এনক্রিপশন সক্রিয় হয়েছে!");
+        } else {
+          app.VaultCrypto.removeVaultPassphrase();
+          for (const u of state.universities) {
+            delete u.__encPass;
+          }
+          saveUniversities();
+          closeVaultPassModal();
+          renderCredentialsView();
+          showToast(isEn ? "Vault passphrase removed." : "ভল্ট পাসফ্রেজ মুছে ফেলা হয়েছে।");
+        }
+      });
 
       // Language Toggle (BN / EN)
       document.getElementById("btnLangBn").addEventListener("click", () => {
@@ -620,6 +718,144 @@
           el.addEventListener("change", renderEligibilityView);
         }
       });
+
+      // Mobile Bottom Navigation
+      document.querySelectorAll("[data-mobile-nav]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const tab = btn.getAttribute("data-mobile-nav");
+          if (tab === "more") {
+            document.getElementById("moreOptionsModal")?.classList.remove("hidden");
+          } else {
+            switchMainTab(tab);
+          }
+        });
+      });
+
+      document.getElementById("btnCloseMoreModal")?.addEventListener("click", () => {
+        document.getElementById("moreOptionsModal")?.classList.add("hidden");
+      });
+
+      document.getElementById("btnMoreJumpCreds")?.addEventListener("click", () => {
+        document.getElementById("moreOptionsModal")?.classList.add("hidden");
+        switchMainTab("credentials");
+      });
+
+      document.getElementById("btnMoreJumpElig")?.addEventListener("click", () => {
+        document.getElementById("moreOptionsModal")?.classList.add("hidden");
+        switchMainTab("eligibility");
+      });
+
+      document.getElementById("btnMoreJumpGuide")?.addEventListener("click", () => {
+        document.getElementById("moreOptionsModal")?.classList.add("hidden");
+        switchMainTab("guide");
+      });
+
+      // Calendar sync (.ics)
+      const handleIcsSync = () => {
+        if (typeof exportTargetedIcs === "function") exportTargetedIcs();
+      };
+      document.getElementById("btnHeaderCalendarSync")?.addEventListener("click", handleIcsSync);
+      document.getElementById("btnMoreIcsSync")?.addEventListener("click", () => {
+        document.getElementById("moreOptionsModal")?.classList.add("hidden");
+        handleIcsSync();
+      });
+
+      // Full JSON backup & restore
+      const handleBackupExport = () => {
+        if (typeof exportBackupJson === "function") exportBackupJson();
+      };
+      document.getElementById("btnHeaderBackup")?.addEventListener("click", handleBackupExport);
+      document.getElementById("btnMoreBackup")?.addEventListener("click", () => {
+        document.getElementById("moreOptionsModal")?.classList.add("hidden");
+        handleBackupExport();
+      });
+
+      const handleRestoreTrigger = () => {
+        if (typeof triggerImportJson === "function") triggerImportJson();
+      };
+      document.getElementById("btnMoreRestore")?.addEventListener("click", () => {
+        document.getElementById("moreOptionsModal")?.classList.add("hidden");
+        handleRestoreTrigger();
+      });
+
+      document.getElementById("fileInputRestoreJson")?.addEventListener("change", e => {
+        const file = e.target.files && e.target.files[0];
+        if (file && typeof handleImportFile === "function") {
+          handleImportFile(file);
+        }
+      });
+
+      // Dark Mode Toggle
+      const applyTheme = (theme) => {
+        document.documentElement.setAttribute("data-theme", theme);
+        const icon = document.getElementById("themeIcon");
+        if (icon) icon.textContent = theme === "dark" ? "☀️" : "🌙";
+        try { localStorage.setItem("bd_admission_theme", theme); } catch (e) {}
+      };
+
+      const savedTheme = localStorage.getItem("bd_admission_theme") || (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      applyTheme(savedTheme);
+
+      document.getElementById("btnToggleTheme")?.addEventListener("click", () => {
+        const current = document.documentElement.getAttribute("data-theme") || "light";
+        const next = current === "dark" ? "light" : "dark";
+        applyTheme(next);
+        showToast(next === "dark" ? "ডার্ক মোড সক্রিয় করা হয়েছে" : "লাইট মোড সক্রিয় করা হয়েছে");
+      });
+
+      // Hero Collapse Toggle
+      const heroContainer = document.getElementById("heroSummaryContainer");
+      const heroCollapseBtn = document.getElementById("btnToggleHeroCollapse");
+      const heroCollapseLbl = document.getElementById("lblHeroCollapse");
+      if (heroCollapseBtn && heroContainer) {
+        heroCollapseBtn.addEventListener("click", () => {
+          const isHidden = heroContainer.classList.toggle("hidden");
+          if (heroCollapseLbl) {
+            heroCollapseLbl.textContent = isHidden ? "▼ সারসংক্ষেপ প্রসারিত করুন" : "▲ সারসংক্ষেপ সংকুচিত করুন";
+          }
+        });
+      }
+
+      // Onboarding Dismiss
+      const onboardCard = document.getElementById("onboardingWelcomeCard");
+      if (localStorage.getItem("bd_admission_onboarded_v1") === "true" && onboardCard) {
+        onboardCard.classList.add("hidden");
+      }
+      document.getElementById("btnDismissOnboarding")?.addEventListener("click", () => {
+        if (onboardCard) onboardCard.classList.add("hidden");
+        try { localStorage.setItem("bd_admission_onboarded_v1", "true"); } catch (e) {}
+      });
+
+      // Quick Filter Chips in Directory
+      document.querySelectorAll("[data-chip-filter]").forEach(chip => {
+        chip.addEventListener("click", () => {
+          document.querySelectorAll("[data-chip-filter]").forEach(c => {
+            c.className = "chip-filter px-3 py-1 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 shrink-0";
+          });
+          chip.className = "chip-filter px-3 py-1 rounded-full bg-emerald-600 text-white shrink-0";
+
+          const filterType = chip.getAttribute("data-chip-filter");
+          if (filterType === "all") {
+            state.categoryFilter = "all";
+            state.searchQuery = "";
+          } else if (filterType === "urgent") {
+            state.categoryFilter = "all";
+            state.searchQuery = "";
+          } else if (filterType === "open") {
+            state.categoryFilter = "all";
+            state.statusFilter = "pending";
+          } else {
+            state.searchQuery = filterType;
+          }
+          renderDirectory();
+        });
+      });
+
+      // PWA Service Worker Registration
+      if ("serviceWorker" in navigator && window.location.protocol.startsWith("http")) {
+        navigator.serviceWorker.register("./sw.js").catch(() => {});
+      }
+
 
       // Initialize Live University Notice Ticker & Auto-Sync
       initLiveNotices();
