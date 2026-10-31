@@ -266,13 +266,10 @@
             <!-- Subview Switcher Buttons -->
             <div class="flex items-center gap-1.5 p-1 bg-slate-100 rounded-xl self-start md:self-auto">
               <button type="button" data-marks-subview="planner" class="px-3 py-1.5 rounded-lg text-xs font-bold transition ${marksState.activeSubView === 'planner' ? 'bg-white text-emerald-800 shadow-2xs' : 'text-slate-600 hover:text-slate-900'}">
-                ${isEn ? '📝 Score Planner' : '📝 আমার নম্বর'}
+                ${isEn ? '📝 Subject Marks & Merit Score' : '📝 নম্বর বণ্টন ও মেধা স্কোর'}
               </button>
               <button type="button" data-marks-subview="compare" class="px-3 py-1.5 rounded-lg text-xs font-bold transition ${marksState.activeSubView === 'compare' ? 'bg-white text-emerald-800 shadow-2xs' : 'text-slate-600 hover:text-slate-900'}">
                 ${isEn ? '⚖️ Compare Units' : '⚖️ ইউনিট তুলনা'}
-              </button>
-              <button type="button" data-marks-subview="history" class="px-3 py-1.5 rounded-lg text-xs font-bold transition ${marksState.activeSubView === 'history' ? 'bg-white text-emerald-800 shadow-2xs' : 'text-slate-600 hover:text-slate-900'}">
-                ${isEn ? '📈 Mock Log' : '📈 মডেল টেস্ট লগ'}
               </button>
             </div>
           </div>
@@ -328,12 +325,10 @@
         </div>
 
         <!-- Conditional Subviews -->
-        ${marksState.activeSubView === 'planner' ? renderPlannerSubView(unit, calc, gpa, isEn) : ''}
-        ${marksState.activeSubView === 'compare' ? renderCompareSubView(isEn) : ''}
-        ${marksState.activeSubView === 'history' ? renderHistorySubView(unit, calc, isEn) : ''}
+        ${marksState.activeSubView === 'compare' ? renderCompareSubView(isEn) : renderPlannerSubView(unit, calc, gpa, isEn)}
 
-        <!-- Sticky Mobile Summary Bar -->
-        <div class="lg:hidden fixed bottom-0 left-0 right-0 bg-slate-950 text-white px-4 py-2.5 shadow-2xl z-40 border-t border-slate-800 flex items-center justify-between">
+        <!-- Sticky Mobile Summary Bar (Positioned above mobile navigation bar) -->
+        <div class="lg:hidden fixed bottom-[54px] left-0 right-0 bg-slate-950 text-white px-4 py-2.5 shadow-2xl z-30 border-t border-slate-800 flex items-center justify-between">
           <div>
             <span class="text-[10px] text-slate-400 block">${isEn ? 'Net Exam Score' : 'প্রাপ্ত নম্বর (পেনাল্টি বাদে)'}</span>
             <div class="flex items-center gap-1.5">
@@ -404,8 +399,8 @@
           <div class="p-4 sm:p-5 bg-white rounded-2xl shadow-sm border border-slate-200 space-y-4">
             <div class="flex items-center justify-between border-b border-slate-100 pb-3">
               <div>
-                <h3 class="text-sm sm:text-base font-bold text-slate-900">${isEn ? 'Section Score Inputs' : 'আপনার প্রত্যাশিত বা মডেল টেস্ট নম্বর'}</h3>
-                <p class="text-xs text-slate-500">${isEn ? 'Enter correct and wrong answers for MCQs to calculate live negative deductions.' : 'সঠিক ও ভুল উত্তরের সংখ্যা লিখলে স্বয়ংক্রিয়ভাবে নেগেটিভ মার্কিং হিসাব হবে।'}</p>
+                <h3 class="text-sm sm:text-base font-bold text-slate-900">${isEn ? 'Section Marks & Expected Score Calculator' : 'বিষয়ভিত্তিক নম্বর ও মেধা স্কোর হিসাব'}</h3>
+                <p class="text-xs text-slate-500">${isEn ? 'Enter correct & wrong answers to calculate live negative marking deductions & official merit scores.' : 'সঠিক ও ভুল উত্তরের সংখ্যা লিখলে স্বয়ংক্রিয়ভাবে নেগেটিভ মার্কিং ও মেধা স্কোর হিসাব হবে।'}</p>
               </div>
               <button type="button" id="btnResetCurrentMarks" class="text-xs font-bold text-rose-600 hover:underline">
                 ${isEn ? 'Clear Inputs' : 'রিসেট'}
@@ -538,9 +533,9 @@
               </div>
             </div>
 
-            <!-- Save Attempt to Mock History Button -->
+            <!-- Save Expected Score Button -->
             <button type="button" id="btnSaveMockAttempt" class="w-full py-2.5 rounded-xl font-bold text-xs bg-emerald-600 hover:bg-emerald-700 text-white shadow-xs transition">
-              ${isEn ? '💾 Save Attempt to Mock Log' : '💾 এই টেস্ট ফলাফল সংরক্ষণ করুন'}
+              ${isEn ? '💾 Save Expected Score' : '💾 প্রত্যাশিত স্কোর সংরক্ষণ করুন'}
             </button>
           </div>
 
@@ -784,7 +779,7 @@
         sectionScores: Object.assign({}, calc.sectionScores)
       });
       saveMarksState();
-      showToast(isEn ? 'Mock test score saved successfully!' : '✅ মডেল টেস্টের স্কোর সফলভাবে সংরক্ষণ করা হয়েছে!');
+      showToast(isEn ? 'Expected score saved successfully!' : '✅ প্রত্যাশিত মেধা স্কোর সফলভাবে সংরক্ষণ করা হয়েছে!');
       renderMarksMainTab();
     };
 

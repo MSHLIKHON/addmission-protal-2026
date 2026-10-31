@@ -33,20 +33,6 @@
           </div>
           <div>
             <div class="flex flex-wrap items-center gap-2">
-          <!-- Dark Mode Toggle Button -->
-          <button type="button" id="btnToggleTheme" title="থিম পরিবর্তন (ডার্ক / লাইট)" class="px-2.5 py-1.5 rounded-xl text-xs font-bold bg-white/10 hover:bg-white/20 text-white border border-white/15 transition flex items-center gap-1">
-            <span id="themeIcon">🌙</span>
-          </button>
-
-          <!-- Calendar Sync (.ics) -->
-          <button id="btnHeaderCalendarSync" type="button" title="টার্গেট পরীক্ষার ক্যালেন্ডার সিঙ্ক (.ics ডাউনলোড)" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-white/10 hover:bg-white/20 text-white border border-white/15 transition">
-            <span>📅 .ics সিঙ্ক</span>
-          </button>
-
-          <!-- Full Backup (.json) -->
-          <button id="btnHeaderBackup" type="button" title="সম্পূর্ণ তথ্যের ব্যাকআপ (.json)" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-white/10 hover:bg-white/20 text-white border border-white/15 transition">
-            <span>💾 ব্যাকআপ</span>
-          </button>
               <h1 id="lblAppTitle" class="text-lg sm:text-xl font-bold tracking-tight text-white">বিশ্ববিদ্যালয় ভর্তি পোর্টাল ও ট্র্যাকার ২০২৬-২০২৭</h1>
               <span id="lblAppBadge" class="px-2.5 py-0.5 text-[11px] font-bold rounded-full bg-emerald-400/20 text-emerald-200 border border-emerald-400/30">সরকারি + IUT + টপ ১০ প্রাইভেট</span>
             </div>
@@ -62,6 +48,21 @@
             <button type="button" id="btnLangBn" class="px-2.5 py-1 rounded-lg text-xs font-bold bg-emerald-400 text-slate-950 transition">বাংলা</button>
             <button type="button" id="btnLangEn" class="px-2.5 py-1 rounded-lg text-xs font-bold text-slate-200 hover:text-white transition">EN</button>
           </div>
+
+          <!-- Dark Mode Toggle Button -->
+          <button type="button" id="btnToggleTheme" title="থিম পরিবর্তন (ডার্ক / লাইট)" class="px-2.5 py-1.5 rounded-xl text-xs font-bold bg-white/10 hover:bg-white/20 text-white border border-white/15 transition flex items-center gap-1">
+            <span id="themeIcon">🌙</span>
+          </button>
+
+          <!-- Calendar Sync (.ics) -->
+          <button id="btnHeaderCalendarSync" type="button" title="টার্গেট পরীক্ষার ক্যালেন্ডার সিঙ্ক (.ics ডাউনলোড)" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-white/10 hover:bg-white/20 text-white border border-white/15 transition">
+            <span>📅 .ics সিঙ্ক</span>
+          </button>
+
+          <!-- Full Backup (.json) -->
+          <button id="btnHeaderBackup" type="button" title="সম্পূর্ণ তথ্যের ব্যাকআপ (.json)" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-white/10 hover:bg-white/20 text-white border border-white/15 transition">
+            <span>💾 ব্যাকআপ</span>
+          </button>
 
           <span id="autoSyncBadge" class="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-emerald-500/20 text-emerald-200 border border-emerald-400/30">
             <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse-dot"></span>
@@ -95,8 +96,8 @@
     <!-- Main Navigation Tabs -->
     <div class="bg-slate-900/60 border-t border-white/10">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between overflow-x-auto custom-scrollbar">
-        <nav class="flex space-x-1 py-2" aria-label="Main Tabs">
-          <button type="button" data-main-tab="directory" class="main-tab-btn px-3.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition flex items-center gap-1.5 bg-emerald-500 text-slate-950 shadow-sm">
+        <nav class="flex items-center gap-2 py-2" aria-label="Main Tabs">
+          <button type="button" data-main-tab="directory" class="main-tab-btn shrink-0 px-3.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition flex items-center gap-1.5 bg-emerald-500 text-slate-950 shadow-sm">
             <svg width="16" height="16" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
             </svg>
@@ -104,7 +105,7 @@
             <span id="navBadgeTotal" class="px-2 py-0.2 text-[11px] rounded-full bg-slate-900/20 font-bold">৫২</span>
           </button>
 
-          <button type="button" data-main-tab="timeline" class="main-tab-btn px-3.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition flex items-center gap-1.5 text-slate-200 hover:bg-white/10">
+          <button type="button" data-main-tab="timeline" class="main-tab-btn shrink-0 px-3.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition flex items-center gap-1.5 text-slate-200 hover:bg-white/10">
             <svg width="16" height="16" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
             </svg>
@@ -112,14 +113,14 @@
             <span id="navBadgeClashes" class="px-2 py-0.2 text-[11px] rounded-full bg-rose-600 text-white font-bold">০</span>
           </button>
 
-          <button type="button" data-main-tab="eligibility" class="main-tab-btn px-3.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition flex items-center gap-1.5 text-slate-200 hover:bg-white/10">
+          <button type="button" data-main-tab="eligibility" class="main-tab-btn shrink-0 px-3.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition flex items-center gap-1.5 text-slate-200 hover:bg-white/10">
             <svg width="16" height="16" class="w-4 h-4 text-amber-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
             </svg>
             <span id="navTabElig">GPA যোগ্যতা যাচাই</span>
           </button>
 
-          <button type="button" data-main-tab="targets" class="main-tab-btn px-3.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition flex items-center gap-1.5 text-slate-200 hover:bg-white/10">
+          <button type="button" data-main-tab="targets" class="main-tab-btn shrink-0 px-3.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition flex items-center gap-1.5 text-slate-200 hover:bg-white/10">
             <svg width="16" height="16" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
             </svg>
@@ -127,7 +128,7 @@
             <span id="navBadgeTargets" class="px-2 py-0.2 text-[11px] rounded-full bg-amber-400 text-slate-950 font-bold">০</span>
           </button>
 
-          <button type="button" data-main-tab="credentials" class="main-tab-btn px-3.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition flex items-center gap-1.5 text-slate-200 hover:bg-white/10">
+          <button type="button" data-main-tab="credentials" class="main-tab-btn shrink-0 px-3.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition flex items-center gap-1.5 text-slate-200 hover:bg-white/10">
             <svg width="16" height="16" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
             </svg>
@@ -135,7 +136,7 @@
             <span id="navBadgeCreds" class="px-2 py-0.2 text-[11px] rounded-full bg-emerald-400 text-slate-950 font-bold">০</span>
           </button>
 
-                    <button type="button" data-main-tab="marks" class="main-tab-btn px-3.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition flex items-center gap-1.5 text-slate-200 hover:bg-white/10">
+                    <button type="button" data-main-tab="marks" class="main-tab-btn shrink-0 px-3.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition flex items-center gap-1.5 text-slate-200 hover:bg-white/10">
             <svg width="16" height="16" class="w-4 h-4 text-emerald-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
             </svg>
@@ -143,7 +144,7 @@
             <span class="px-2 py-0.2 text-[10px] rounded-full bg-emerald-400 text-slate-950 font-bold">নতুন</span>
           </button>
 
-          <button type="button" data-main-tab="guide" class="main-tab-btn px-3.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition flex items-center gap-1.5 text-slate-200 hover:bg-white/10">
+          <button type="button" data-main-tab="guide" class="main-tab-btn shrink-0 px-3.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition flex items-center gap-1.5 text-slate-200 hover:bg-white/10">
             <svg width="16" height="16" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>

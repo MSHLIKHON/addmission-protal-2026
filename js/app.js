@@ -97,9 +97,9 @@
       document.querySelectorAll(".main-tab-btn").forEach(btn => {
         const isCurrent = btn.getAttribute("data-main-tab") === tabName;
         if (isCurrent) {
-          btn.className = "main-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap transition flex items-center gap-2 bg-emerald-500 text-slate-950 shadow-sm";
+          btn.className = "main-tab-btn shrink-0 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap transition flex items-center gap-2 bg-emerald-500 text-slate-950 shadow-sm";
         } else {
-          btn.className = "main-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap transition flex items-center gap-2 text-slate-200 hover:bg-white/10";
+          btn.className = "main-tab-btn shrink-0 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap transition flex items-center gap-2 text-slate-200 hover:bg-white/10";
         }
       });
 
