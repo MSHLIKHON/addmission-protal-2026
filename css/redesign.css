@@ -319,3 +319,135 @@ footer { background: #fff !important; border-color: var(--line) !important; padd
   body > header h1#lblAppTitle { font-size: 1.08rem !important; }
   .kpi-card .w-9.h-9 { display: none; }
 }
+
+/* 2026 readability & spacing pass — intentionally last in the cascade */
+html { font-size: 17px !important; }
+body { font-size: 1rem !important; line-height: 1.7 !important; }
+
+body > header > div:first-child { max-width: 82rem; padding-block: 1.4rem !important; }
+body > header > div:first-child > div { gap: 1.25rem !important; }
+body > header h1#lblAppTitle { font-size: clamp(1.45rem, 2.4vw, 1.9rem) !important; }
+#lblAppSubtitle { margin-top: .35rem !important; font-size: .96rem !important; line-height: 1.55 !important; }
+#lblAppBadge { padding: .35rem .7rem !important; font-size: .75rem !important; }
+#btnSmartParserModal, #btnAddUniModal, #btnExportCsv, #btnToggleTheme { min-height: 2.8rem !important; font-size: .86rem !important; }
+
+body > header > div:last-child > div { max-width: 82rem; padding-block: .25rem; }
+body > header nav { gap: .6rem !important; padding-block: .72rem !important; }
+.main-tab-btn { min-height: 2.75rem !important; padding: .65rem 1rem !important; font-size: .87rem !important; line-height: 1.25 !important; }
+.main-tab-btn svg { width: 1.05rem !important; height: 1.05rem !important; }
+
+main#mainContent { max-width: 82rem !important; padding-top: 2.25rem !important; padding-bottom: 5rem !important; }
+main#mainContent.space-y-5 > * + * { margin-top: 2rem !important; }
+#heroSummaryContainer { display: flex; flex-direction: column; gap: 1.5rem; }
+#heroSummaryContainer > * + * { margin-top: 0 !important; }
+
+#onboardingWelcomeCard { padding: 1.4rem 1.55rem !important; border-radius: 1.25rem !important; box-shadow: 0 12px 34px rgba(15, 66, 54, .13) !important; }
+#onboardingWelcomeCard h3 { font-size: 1.12rem !important; }
+#onboardingWelcomeCard p { font-size: .92rem !important; line-height: 1.65 !important; }
+#onboardingWelcomeCard .text-\[11px\] { font-size: .78rem !important; }
+#btnDismissOnboarding { min-height: 2.5rem; padding-inline: .85rem !important; font-size: .83rem !important; }
+
+#liveNoticesBar { min-height: 5rem; padding: 1.1rem 1.25rem !important; border-radius: 1.15rem !important; }
+#liveNoticeTickerContainer { font-size: .98rem !important; line-height: 1.55 !important; }
+#liveNoticesBar button { min-height: 2.6rem !important; font-size: .82rem !important; }
+
+.countdown-banner { padding: 1.8rem !important; border-radius: 1.5rem !important; }
+.countdown-banner > div { gap: 1.5rem !important; }
+#heroNextExamName { font-size: 1.5rem !important; margin-top: .4rem; }
+#heroNextExamMeta { font-size: 1rem !important; line-height: 1.55 !important; }
+#countdownTargetSelect { min-height: 2.75rem !important; padding-inline: .85rem !important; font-size: .9rem !important; }
+.countdown-banner .grid.grid-cols-4 { gap: .65rem !important; }
+.countdown-banner .grid.grid-cols-4 > div { min-width: 5.25rem; padding: .9rem .75rem !important; }
+.countdown-banner .grid.grid-cols-4 > div > div:first-child { font-size: 1.7rem !important; }
+.countdown-banner .grid.grid-cols-4 > div > div:last-child { font-size: .78rem !important; }
+#btnHeroViewCalendar, #btnHeroCheckGpa { min-height: 3rem !important; font-size: .9rem !important; }
+
+#heroSummaryContainer > section[aria-label="সারসংক্ষেপ পরিসংখ্যান"] { gap: 1rem !important; }
+.kpi-card { min-height: 10.3rem !important; padding: 1.3rem !important; border-radius: 1.15rem !important; }
+.kpi-card .text-2xl { font-size: 1.9rem !important; margin-top: .55rem !important; }
+.kpi-card .text-xs { font-size: .88rem !important; line-height: 1.45 !important; }
+
+#viewDirectory { margin-top: 2.25rem !important; }
+#viewDirectory > div:first-child { padding: 1.15rem 1.25rem !important; }
+#viewDirectory > div:nth-child(2) { padding: 1.4rem !important; }
+#searchInput, #statusFilterSelect, #sortSelect,
+#credSearchInput, #credFilterSelect,
+#eligGroupSelect, #eligSscInput, #eligHscInput, #eligSecondTimeSelect {
+  min-height: 3.3rem !important; font-size: 1rem !important; padding-inline: 1rem !important;
+}
+.chip-filter, .cat-pill { min-height: 2.55rem !important; padding: .55rem .9rem !important; font-size: .86rem !important; }
+#resultsCountLabel { font-size: .98rem !important; }
+
+#cardsContainer { gap: 1.35rem !important; margin-top: 1.5rem !important; }
+#cardsContainer article { min-height: 28rem; padding: 1.35rem !important; border-radius: 1.2rem !important; }
+#cardsContainer article h3 { font-size: 1.1rem !important; line-height: 1.5 !important; }
+#cardsContainer article .text-xs { font-size: .84rem !important; line-height: 1.5 !important; }
+#cardsContainer article .sm\:text-sm { font-size: .96rem !important; }
+#cardsContainer article a, #cardsContainer article button { min-height: 2.65rem !important; font-size: .82rem !important; }
+
+#viewTimeline, #viewCredentials, #viewTargets, #viewGuide, #viewEligibility, #viewMarks { margin-top: 2rem !important; }
+#viewTimeline > div, #viewCredentials > div, #viewTargets > div, #viewGuide > div, #viewEligibility > div,
+#marksTabContent > div > div { border-radius: 1.25rem !important; }
+#viewTimeline h2, #viewCredentials h2, #viewTargets h2, #viewGuide h2, #viewEligibility h2, #viewMarks h2 { font-size: 1.35rem !important; }
+#marksTabContent { font-size: 1rem; }
+#marksTabContent .text-xs { font-size: .86rem !important; line-height: 1.55 !important; }
+#marksTabContent .text-\[11px\] { font-size: .78rem !important; line-height: 1.5 !important; }
+#marksTabContent .text-\[10px\] { font-size: .72rem !important; }
+
+/* A softer, readable dark mode instead of near-black blocks */
+[data-theme="dark"] {
+  --bg-page: #10211d;
+  --bg-card: #18302a;
+  --text-main: #f1f7f5;
+  --text-muted: #aec3bd;
+  --border-card: #315149;
+}
+[data-theme="dark"] body { background: #10211d !important; background-image: radial-gradient(circle at 5% 0%, rgba(38,153,122,.13), transparent 34rem) !important; }
+[data-theme="dark"] body > header { background: #15352e !important; border-color: #315149 !important; }
+[data-theme="dark"] body > header h1#lblAppTitle { color: #f5fbf9 !important; }
+[data-theme="dark"] #lblAppSubtitle { color: #b8cec8 !important; }
+[data-theme="dark"] .bg-white { background-color: #18302a !important; }
+[data-theme="dark"] .bg-slate-50,
+[data-theme="dark"] .bg-slate-50\/50,
+[data-theme="dark"] .bg-slate-50\/40,
+[data-theme="dark"] .bg-slate-50\/60,
+[data-theme="dark"] .bg-slate-50\/70,
+[data-theme="dark"] .bg-slate-50\/90 { background-color: #132822 !important; }
+[data-theme="dark"] #liveNoticesBar { background: #18302a !important; border-color: #315149 !important; }
+[data-theme="dark"] #liveNoticeTickerContainer { color: #dceae6 !important; }
+[data-theme="dark"] #viewDirectory > div:first-child { background: #18302a !important; border-color: #315149 !important; }
+[data-theme="dark"] footer { background: #153029 !important; border-color: #315149 !important; }
+
+@media (max-width: 1023px) {
+  html { font-size: 16.5px !important; }
+  main#mainContent { padding-top: 1.6rem !important; }
+  main#mainContent.space-y-5 > * + * { margin-top: 1.5rem !important; }
+  #heroSummaryContainer { gap: 1.15rem; }
+  .main-tab-btn { font-size: .84rem !important; }
+}
+
+@media (max-width: 767px) {
+  html { font-size: 16px !important; }
+  body { line-height: 1.62 !important; }
+  body > header > div:first-child { padding: 1rem !important; }
+  body > header h1#lblAppTitle { font-size: 1.2rem !important; }
+  .main-tab-btn { min-height: 2.55rem !important; padding: .55rem .8rem !important; font-size: .82rem !important; }
+  main#mainContent { padding: 1.25rem 1rem 5.5rem !important; }
+  #onboardingWelcomeCard { padding: 1.15rem !important; }
+  #onboardingWelcomeCard h3 { font-size: 1.02rem !important; }
+  #onboardingWelcomeCard p { font-size: .88rem !important; }
+  #liveNoticesBar { padding: 1rem !important; }
+  #liveNoticeTickerContainer { font-size: .91rem !important; }
+  .countdown-banner { padding: 1.2rem !important; }
+  #heroNextExamName { font-size: 1.25rem !important; }
+  #heroNextExamMeta { font-size: .9rem !important; }
+  .countdown-banner .grid.grid-cols-4 > div { padding: .75rem .3rem !important; }
+  .countdown-banner .grid.grid-cols-4 > div > div:first-child { font-size: 1.35rem !important; }
+  .kpi-card { min-height: 8.8rem !important; padding: 1rem !important; }
+  .kpi-card .text-xs { font-size: .8rem !important; }
+  #viewDirectory { margin-top: 1.5rem !important; }
+  #viewDirectory > div:nth-child(2) { padding: 1rem !important; }
+  #cardsContainer { gap: 1rem !important; }
+  #cardsContainer article { min-height: 0; padding: 1.1rem !important; }
+  #cardsContainer article h3 { font-size: 1.05rem !important; }
+}

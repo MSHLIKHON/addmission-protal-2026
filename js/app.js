@@ -793,7 +793,7 @@
         try { localStorage.setItem("bd_admission_theme", theme); } catch (e) {}
       };
 
-      const savedTheme = localStorage.getItem("bd_admission_theme") || (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      const savedTheme = localStorage.getItem("bd_admission_theme") || "light";
       applyTheme(savedTheme);
 
       document.getElementById("btnToggleTheme")?.addEventListener("click", () => {
