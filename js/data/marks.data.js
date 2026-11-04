@@ -217,33 +217,51 @@
       unitKey: "agri-cluster",
       unitName: "কৃষি গুচ্ছ (৯টি সরকারি কৃষি বিশ্ববিদ্যালয়)",
       unitNameEn: "Agricultural Cluster (9 Universities)",
+      sourceSession: "2025-26",
+      latestSession: "2026-27",
+      referenceOnly: true,
+      eligibilityGroups: ["science"],
+      requiredHscSubjects: ["পদার্থবিজ্ঞান", "রসায়ন", "গণিত", "জীববিজ্ঞান"],
       totalMarks: 100,
       durationMin: 60,
       negativeMarking: 0.25,
-      passMark: 40,
+      passMark: null,
       hasWritten: false,
       hasMcq: true,
       sections: [
-        { key: "biology", nameBn: "জীববিজ্ঞান", nameEn: "Biology", marks: 30, questions: 30, writtenMarks: 0, mcqMarks: 30, isOptional: false },
-        { key: "chemistry", nameBn: "রসায়ন", nameEn: "Chemistry", marks: 20, questions: 20, writtenMarks: 0, mcqMarks: 20, isOptional: false },
+        { key: "english", nameBn: "ইংরেজি", nameEn: "English", marks: 10, questions: 10, writtenMarks: 0, mcqMarks: 10, isOptional: false },
+        { key: "zoology", nameBn: "প্রাণিবিজ্ঞান", nameEn: "Zoology", marks: 15, questions: 15, writtenMarks: 0, mcqMarks: 15, isOptional: false },
+        { key: "botany", nameBn: "উদ্ভিদবিজ্ঞান", nameEn: "Botany", marks: 15, questions: 15, writtenMarks: 0, mcqMarks: 15, isOptional: false },
         { key: "physics", nameBn: "পদার্থবিজ্ঞান", nameEn: "Physics", marks: 20, questions: 20, writtenMarks: 0, mcqMarks: 20, isOptional: false },
-        { key: "math", nameBn: "উচ্চতর গণিত", nameEn: "Higher Math", marks: 20, questions: 20, writtenMarks: 0, mcqMarks: 20, isOptional: false },
-        { key: "english", nameBn: "ইংরেজি", nameEn: "English", marks: 10, questions: 10, writtenMarks: 0, mcqMarks: 10, isOptional: false }
+        { key: "chemistry", nameBn: "রসায়ন", nameEn: "Chemistry", marks: 20, questions: 20, writtenMarks: 0, mcqMarks: 20, isOptional: false },
+        { key: "math", nameBn: "গণিত", nameEn: "Mathematics", marks: 20, questions: 20, writtenMarks: 0, mcqMarks: 20, isOptional: false }
       ],
       meritFormula: {
-        sscWeight: 8,
-        hscWeight: 12,
-        sscMax: 40,
-        hscMax: 60,
+        sscWeight: 5,
+        hscWeight: 5,
+        sscMax: 25,
+        hscMax: 25,
         testWeight: 1,
         testMax: 100,
-        totalMerit: 200,
-        descriptionBn: "SSC GPA (৪র্থ বিষয় বাদে) × ৮ + HSC GPA (৪র্থ বিষয় বাদে) × ১২ + টেস্ট ১০০ = মোট ২০০ নম্বর",
-        descriptionEn: "SSC GPA × 8 + HSC GPA × 12 + Test 100 = Total 200 marks",
-        notesBn: "১০০টি MCQ, ভুল উত্তরের জন্য ০.২৫ নম্বর কাটা যাবে।"
+        totalMerit: 150,
+        descriptionBn: "ভর্তি পরীক্ষা ১০০ + SSC ২৫ + HSC ২৫ = মোট ১৫০ নম্বর (SSC/HSC-তে ৪র্থ বিষয় বাদে)",
+        descriptionEn: "Admission test 100 + SSC 25 + HSC 25 = Total 150 (excluding fourth subject)",
+        notesBn: "২০২৫–২৬ অফিসিয়াল সার্কুলারের রেফারেন্স। ১০০টি MCQ; প্রতি ভুল উত্তরে ০.২৫ নম্বর কাটা হবে। ২০২৬–২৭ মানবণ্টন প্রকাশ হলে সেটিই চূড়ান্ত।"
       },
-      source: "https://acas.edu.bd",
-      verifiedOn: "2026-10-25"
+      members: [
+        { nameBn: "বাংলাদেশ কৃষি বিশ্ববিদ্যালয়", locationBn: "ময়মনসিংহ", url: "https://bau.edu.bd" },
+        { nameBn: "গাজীপুর কৃষি বিশ্ববিদ্যালয়", locationBn: "গাজীপুর", url: "https://gau.edu.bd" },
+        { nameBn: "শেরেবাংলা কৃষি বিশ্ববিদ্যালয়", locationBn: "ঢাকা", url: "https://sau.edu.bd" },
+        { nameBn: "পটুয়াখালী বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয়", locationBn: "পটুয়াখালী", url: "https://pstu.ac.bd" },
+        { nameBn: "চট্টগ্রাম ভেটেরিনারি ও অ্যানিম্যাল সায়েন্সেস বিশ্ববিদ্যালয়", locationBn: "চট্টগ্রাম", url: "https://cvasu.ac.bd" },
+        { nameBn: "সিলেট কৃষি বিশ্ববিদ্যালয়", locationBn: "সিলেট", url: "https://sau.ac.bd" },
+        { nameBn: "খুলনা কৃষি বিশ্ববিদ্যালয়", locationBn: "খুলনা", url: "https://kau.edu.bd" },
+        { nameBn: "হবিগঞ্জ কৃষি বিশ্ববিদ্যালয়", locationBn: "হবিগঞ্জ", url: "https://hau.ac.bd" },
+        { nameBn: "কুড়িগ্রাম কৃষি বিশ্ববিদ্যালয়", locationBn: "কুড়িগ্রাম", url: "https://kuriau.edu.bd" }
+      ],
+      source: "https://acas.edu.bd/api/file/download/notice/f021b80d-d79e-43a0-a9ac-96130ad452ea.pdf",
+      latestNotice: "https://sau.edu.bd/public/index.php/home/notice-detail/1063",
+      verifiedOn: "2026-11-04"
     },
 
     // 5. GST Cluster (২৪ সাধারণ ও বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয়)

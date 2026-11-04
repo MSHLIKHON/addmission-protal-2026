@@ -236,9 +236,13 @@
     const uniUnits = app.getMarksDataForUni ? app.getMarksDataForUni(marksState.selectedUniId) : [];
 
     const isVerified = Boolean(unit.verifiedOn && unit.source);
-    const badgeHtml = isVerified
+    const badgeHtml = unit.referenceOnly
+      ? `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-900 border border-amber-300">
+           <span>ℹ️</span><span>${isEn ? 'Official 2025–26 reference; 2026–27 circular pending' : '২০২৫–২৬ অফিসিয়াল রেফারেন্স · ২০২৬–২৭ সার্কুলার অপেক্ষমাণ'}</span>
+         </span>`
+      : isVerified
       ? `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">
-           <span>✅</span><span>${isEn ? 'Verified Circular' : 'অফিসিয়াল সার্কুলার অনুযায়ী যাচাইকৃত'}</span>
+           <span>✅</span><span>${isEn ? 'Official source linked' : 'অফিসিয়াল সূত্র সংযুক্ত'}</span>
          </span>`
       : `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-900 border border-amber-300">
            <span>⚠️</span><span>${isEn ? 'Unverified / Awaiting Circular' : 'তথ্য যাচাই করুন / সার্কুলার অপ্রকাশিত'}</span>
@@ -368,6 +372,7 @@
     }).join('');
 
     return `
+      ${unit.unitKey === 'agri-cluster' ? renderAgricultureClusterInfo(unit, isEn) : ''}
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
         <!-- Left 2 Cols: Mark Distribution & Section Inputs -->
@@ -570,6 +575,26 @@
         </div>
 
       </div>
+    `;
+  }
+
+  function renderAgricultureClusterInfo(unit, isEn) {
+    const required = unit.requiredHscSubjects || [];
+    const members = unit.members || [];
+    return `
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <section class="p-4 sm:p-5 rounded-2xl border border-emerald-200 bg-emerald-50/60 shadow-sm">
+          <span class="text-[11px] font-bold uppercase tracking-wide text-emerald-700">${isEn ? 'Eligibility group' : 'কোন বিভাগ থেকে পরীক্ষা দেওয়া যাবে'}</span>
+          <h3 class="mt-1 text-base font-bold text-emerald-950">${isEn ? 'Science group only' : 'শুধু বিজ্ঞান বিভাগ'}</h3>
+          <p class="mt-1 text-xs leading-relaxed text-emerald-900">${isEn ? 'Physics, Chemistry, Mathematics and Biology are required at HSC/equivalent level.' : 'HSC/সমমানে পদার্থবিজ্ঞান, রসায়ন, গণিত ও জীববিজ্ঞান থাকতে হবে। চূড়ান্ত GPA ও পাশের বছর নতুন সার্কুলার থেকে যাচাই করুন।'}</p>
+          <div class="flex flex-wrap gap-1.5 mt-3">${required.map(subject => `<span class="px-2 py-1 rounded-lg bg-white border border-emerald-200 text-[11px] font-bold text-emerald-800">✓ ${escapeHtml(subject)}</span>`).join('')}</div>
+        </section>
+        <section class="lg:col-span-2 p-4 sm:p-5 rounded-2xl border border-slate-200 bg-white shadow-sm">
+          <div class="flex flex-wrap items-start justify-between gap-2"><div><span class="text-[11px] font-bold uppercase tracking-wide text-emerald-700">${isEn ? 'One cluster, nine universities' : 'এক গুচ্ছে ৯টি সরকারি বিশ্ববিদ্যালয়'}</span><h3 class="mt-1 text-base font-bold text-slate-900">${isEn ? 'Agricultural Cluster members' : 'কৃষি গুচ্ছের অন্তর্ভুক্ত বিশ্ববিদ্যালয়'}</h3></div><a href="${escapeHtml(unit.latestNotice || '#')}" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-lg bg-slate-900 text-white text-[11px] font-bold">${isEn ? '2026–27 official notice ↗' : '২০২৬–২৭ অফিসিয়াল নোটিশ ↗'}</a></div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-3">${members.map((member, index) => `<a href="${escapeHtml(member.url)}" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2.5 p-2.5 rounded-xl border border-slate-200 bg-slate-50/60 hover:border-emerald-300 hover:bg-emerald-50 transition"><span class="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-800 text-xs font-bold grid place-items-center shrink-0">${isEn ? index + 1 : toBengaliNumber(index + 1)}</span><span><strong class="block text-xs text-slate-900">${escapeHtml(member.nameBn)}</strong><small class="text-[10px] text-slate-500">${escapeHtml(member.locationBn)} · ${isEn ? 'Official website' : 'অফিসিয়াল ওয়েবসাইট'} ↗</small></span></a>`).join('')}</div>
+        </section>
+      </div>
+      <div class="p-3.5 rounded-xl border border-amber-300 bg-amber-50 text-xs leading-relaxed text-amber-950"><strong>${isEn ? 'Session note:' : 'সেশন নোট:'}</strong> ${isEn ? 'The distribution below is from the official 2025–26 ACAS circular. The 2 January 2027 exam is announced, but the 2026–27 distribution is still pending.' : 'নিচের মানবণ্টনটি ২০২৫–২৬ ACAS-এর অফিসিয়াল সার্কুলারভিত্তিক। ২ জানুয়ারি ২০২৭ পরীক্ষার তারিখ ঘোষণা হয়েছে, তবে ২০২৬–২৭ মানবণ্টন এখনো প্রকাশ হয়নি।'}</div>
     `;
   }
 

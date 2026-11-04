@@ -51,6 +51,13 @@ describe('Phase 2: Marks Distribution & Score Calculator', async () => {
     const agri = allMarks.find(m => m.unitKey === 'agri-cluster');
     assert.ok(agri);
     assert.equal(agri.totalMarks, 100);
+    assert.equal(agri.sections.reduce((sum, section) => sum + section.marks, 0), 100);
+    assert.deepEqual(agri.sections.map(section => section.marks), [10, 15, 15, 20, 20, 20]);
+    assert.equal(agri.meritFormula.totalMerit, 150);
+    assert.deepEqual(agri.eligibilityGroups, ['science']);
+    assert.equal(agri.members.length, 9);
+    assert.match(agri.source, /^https:\/\/acas\.edu\.bd\/api\/file\/download\/notice\/.+\.pdf$/);
+    assert.equal(agri.referenceOnly, true);
   });
 
   test('Score Calculator handles MCQ correct, wrong, and negative marking accurately', () => {
