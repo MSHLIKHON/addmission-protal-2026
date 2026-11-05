@@ -172,7 +172,7 @@
 
             <div class="flex items-center justify-between bg-slate-50/60 px-3 py-2 rounded-xl border border-slate-200/70 text-xs">
               <span class="text-slate-600 font-semibold">${t('আবেদন ফি (৳):', 'Form Fee (BDT):')}</span>
-              <span class="font-bold text-slate-900">৳ ${escapeHtml(dispFee)}</span>
+              <span class="font-bold text-slate-900">${u.defaultFee > 0 ? '৳ ' : ''}${escapeHtml(dispFee)}</span>
             </div>
 
             ${hasCreds ? `
@@ -196,7 +196,7 @@
 
             <!-- Data Freshness & Correction Trigger -->
             <div class="flex items-center justify-between text-[11px] text-slate-500 pt-1 border-t border-slate-100">
-              <span>${t('সর্বশেষ আপডেট:', 'Updated:')} <strong class="text-slate-700">${(u.eligibility && u.eligibility.verifiedOn) ? u.eligibility.verifiedOn : 'অক্টোবর ২০২৬'}</strong></span>
+              <span>${t('সর্বশেষ আপডেট:', 'Updated:')} <strong class="text-slate-700">${u.dataVerifiedOn || ((u.eligibility && u.eligibility.verifiedOn) ? u.eligibility.verifiedOn : 'অক্টোবর ২০২৬')}</strong></span>
               <button type="button" data-action="edit-uni" data-id="${u.id}" class="text-emerald-700 hover:underline font-semibold">
                 ${t('তথ্য ভুল? সংশোধন ✏️', 'Edit info ✏️')}
               </button>
@@ -293,7 +293,7 @@
           </td>
           <td class="py-3 px-4 font-bold ${isAnnounced ? 'text-emerald-800' : 'text-slate-400'}">${escapeHtml(dispExam)}</td>
           <td class="py-3 px-4 font-semibold ${hasDeadline ? 'text-blue-700' : 'text-slate-400'}">${escapeHtml(dispDeadline)}</td>
-          <td class="py-3 px-4 font-bold text-slate-800">৳ ${escapeHtml(dispFee)}</td>
+          <td class="py-3 px-4 font-bold text-slate-800">${u.defaultFee > 0 ? '৳ ' : ''}${escapeHtml(dispFee)}</td>
           <td class="py-3 px-4">
             <button
               type="button"

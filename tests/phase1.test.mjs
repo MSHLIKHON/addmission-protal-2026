@@ -150,4 +150,19 @@ describe('Phase 1 Audit & Bug Fixes', async () => {
     const css = fs.readFileSync('css/base.css', 'utf8');
     assert.ok(css.includes('-apple-system') || css.includes('BlinkMacSystemFont'));
   });
+
+  test('8. DU, KUET and MIST 2026-27 status matches official publication state', () => {
+    const unis = window.AdmissionApp.INITIAL_UNIVERSITIES;
+    const du = unis.find(u => u.id === 1);
+    const kuet = unis.find(u => u.id === 13);
+    const mist = unis.find(u => u.id === 19);
+
+    assert.match(du.examDateText, /৫ ডিসেম্বর \(IBA\)/);
+    assert.equal(du.defaultFee, 1200);
+    assert.equal(kuet.isoExamDate, '2027-01-08');
+    assert.match(kuet.examDateText, /KUET, DU ও RUET/);
+    assert.equal(kuet.defaultFee, 0);
+    assert.equal(mist.isoExamDate, '9999-12-31');
+    assert.equal(mist.defaultFee, 0);
+  });
 });
