@@ -27,6 +27,7 @@
 
   function loadState() {
     const baseList = JSON.parse(JSON.stringify(INITIAL_UNIVERSITIES));
+    const forceOfficialRefreshIds = new Set([1, 13, 19]);
     const savedV2 = safeGetStorage(STORAGE_KEY_UNIS_V2);
     const savedV1 = safeGetStorage(STORAGE_KEY_UNIS_V1);
     const savedSource = Array.isArray(savedV2) && savedV2.length > 0 ? savedV2 : (Array.isArray(savedV1) ? savedV1 : []);
@@ -39,7 +40,7 @@
         if (prev) {
           u.status = prev.status || u.status;
           u.target = Boolean(prev.target);
-          u.selectedFee = prev.selectedFee ?? u.defaultFee;
+          u.selectedFee = forceOfficialRefreshIds.has(u.id) ? u.defaultFee : (prev.selectedFee ?? u.defaultFee);
           u.userId = prev.userId || "";
           u.userPass = prev.userPass || "";
           u.examRoll = prev.examRoll || "";
@@ -47,7 +48,7 @@
           if (prev.eligibility) {
             u.eligibility = prev.eligibility;
           }
-          if (prev.customEdited && prev.isoExamDate && prev.isoExamDate !== "9999-12-31") {
+          if (!forceOfficialRefreshIds.has(u.id) && prev.customEdited && prev.isoExamDate && prev.isoExamDate !== "9999-12-31") {
             u.examDateText = prev.examDateText;
             u.isoExamDate = prev.isoExamDate;
             u.examMonthGroup = prev.examMonthGroup || "unpublished";
