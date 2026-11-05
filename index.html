@@ -304,7 +304,7 @@
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse-dot"></span>
               <span id="lblHeroCdBadge">পরবর্তী ভর্তি পরীক্ষা কাউন্টডাউন</span>
             </span>
-            <select id="countdownTargetSelect" aria-label="কাউন্টডাউন বিশ্ববিদ্যালয় পরিবর্তন" class="bg-white/10 hover:bg-white/20 text-white text-xs font-semibold rounded-lg px-2.5 py-1 border border-white/15 focus:outline-none transition cursor-pointer">
+            <select id="countdownTargetSelect" aria-label="কাউন্টডাউন ইউনিট পরিবর্তন" class="bg-white/10 hover:bg-white/20 text-white text-xs font-semibold rounded-lg px-2.5 py-1 border border-white/15 focus:outline-none transition cursor-pointer">
             </select>
           </div>
           <div id="heroNextExamName" class="text-base sm:text-lg font-bold text-white tracking-tight">মেডিকেল ও ডেন্টাল ( সরকারি MBBS / BDS )</div>
@@ -836,6 +836,17 @@
               <option value="second">২য় বার (Second Timer - ২০২৫)</option>
             </select>
           </div>
+        </div>
+
+        <div id="eligSubjectGradePanel" class="bg-blue-50/60 border border-blue-200 rounded-2xl p-4 space-y-3">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div>
+              <h3 class="text-sm sm:text-base font-bold text-slate-900">HSC বিষয়ভিত্তিক গ্রেড</h3>
+              <p class="text-xs text-slate-600">আপনার গ্রেড দিন—A+, A, A−, B, C, D বা F। Circular-এ verified subject rule থাকলে সেটিও eligibility-তে হিসাব হবে।</p>
+            </div>
+            <span class="text-[11px] font-bold text-blue-800 bg-white border border-blue-200 rounded-full px-3 py-1">Subject-aware check</span>
+          </div>
+          <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2.5" id="eligSubjectGradeInputs"></div>
         </div>
 
         <div id="eligibilityResultGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5"></div>
@@ -1381,7 +1392,7 @@
       <span>সকল তথ্য, তারিখ ও আইডি/পাসওয়ার্ড আপনার নিজ ডিভাইসে স্বয়ংক্রিয়ভাবে সংরক্ষিত থাকে</span>
     </div>
   <p class="text-xs text-slate-400 mt-2 font-mono-num">
-        ডাটা সংস্করণ: v2026.2.2 • অফিসিয়াল সার্কুলার হালনাগাদ: ৫ নভেম্বর ২০২৬ • Hind Siliguri বাংলা ফন্ট ও WebCrypto AES-256 সুরক্ষিত
+        ডাটা সংস্করণ: v2026.3.0 • ইউনিট কাউন্টডাউন ও subject-grade eligibility: ৫ নভেম্বর ২০২৬ • Hind Siliguri বাংলা ফন্ট ও WebCrypto AES-256 সুরক্ষিত
       </p>
   </footer>
 

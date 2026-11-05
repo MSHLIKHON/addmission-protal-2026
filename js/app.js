@@ -75,6 +75,7 @@
       renderCredentialsView();
       renderTargetsView();
       renderGuideView();
+      if (typeof renderSubjectGradeInputs === "function") renderSubjectGradeInputs();
       renderEligibilityView();
       if (typeof renderMarksMainTab === "function") renderMarksMainTab();
     }
@@ -316,8 +317,9 @@
         } else if (action === "edit-uni") {
           openUniModal(uni.id);
         } else if (action === "open-circular") {
-          e.preventDefault();
-          openCircularModal(uni.id);
+          // Keep official portals as normal links so mobile and in-app browsers
+          // can open them directly without a popup-blocked intermediate modal.
+          return;
         } else if (action === "toggle-pass-vis") {
           state.revealedPasswords[uni.id] = !state.revealedPasswords[uni.id];
           renderCredentialsView();
@@ -683,7 +685,7 @@
       const cdSelect = document.getElementById("countdownTargetSelect");
       if (cdSelect) {
         cdSelect.addEventListener("change", e => {
-          state.countdownUniId = Number(e.target.value);
+          state.countdownEventKey = e.target.value;
           tickHeroLiveCountdown();
         });
       }
@@ -718,6 +720,8 @@
           el.addEventListener("change", renderEligibilityView);
         }
       });
+      const subjectGradeHost = document.getElementById("eligSubjectGradeInputs");
+      if (subjectGradeHost) subjectGradeHost.addEventListener("change", renderEligibilityView);
 
       // Mobile Bottom Navigation
       document.querySelectorAll("[data-mobile-nav]").forEach(btn => {

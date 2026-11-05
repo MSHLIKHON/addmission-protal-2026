@@ -6,30 +6,54 @@
   'use strict';
   const app = window.AdmissionApp = window.AdmissionApp || {};
 
+    function getEventStartTime(timeText) {
+      const normalized = String(timeText || "");
+      const match = normalized.match(/(\d{1,2}|[০-৯]{1,2}):([০-৯\d]{2})/);
+      if (!match) return { hour: 10, minute: 0 };
+      const digits = value => Number(String(value).replace(/[০-৯]/g, digit => "০১২৩৪৫৬৭৮৯".indexOf(digit)));
+      let hour = digits(match[1]);
+      const minute = digits(match[2]);
+      if (normalized.includes("দুপুর") && hour < 12) hour += 12;
+      return { hour, minute };
+    }
+
+    function getCountdownEventKey(event, index) {
+      return `${event.uniId}|${event.iso}|${index}`;
+    }
+
+    function getCountdownEvents() {
+      return (window.UNIT_CALENDAR_EVENTS || [])
+        .map((event, index) => ({ ...event, eventKey: getCountdownEventKey(event, index) }))
+        .filter(event => /^\d{4}-\d{2}-\d{2}$/.test(event.iso))
+        .sort((a, b) => a.iso.localeCompare(b.iso) || a.short.localeCompare(b.short));
+    }
+
     function populateCountdownDropdown() {
       const sel = document.getElementById("countdownTargetSelect");
       if (!sel) return;
-      const dated = state.universities
-        .filter(u => isExamAnnounced(u) && u.isoExamDate && u.isoExamDate !== "9999-12-31")
-        .sort((a, b) => a.isoExamDate.localeCompare(b.isoExamDate));
-      if (dated.length === 0) return;
-      if (!dated.some(u => u.id === Number(state.countdownUniId))) {
-        state.countdownUniId = dated[0].id;
+      const events = getCountdownEvents();
+      if (events.length === 0) return;
+      if (!events.some(event => event.eventKey === state.countdownEventKey)) {
+        const legacyMatch = events.find(event => event.uniId === Number(state.countdownUniId));
+        state.countdownEventKey = (legacyMatch || events[0]).eventKey;
       }
-      sel.innerHTML = dated.map(u => `<option value="${u.id}" class="text-slate-900" ${u.id === Number(state.countdownUniId) ? 'selected' : ''}>${escapeHtml(getUniDisplayName(u).split('(')[0].trim())} (${escapeHtml(u.examDateText.split(',')[0])})</option>`).join("");
+      sel.innerHTML = events.map(event => {
+        const dateLabel = state.lang === "en" ? event.iso : toBengaliNumber(event.iso);
+        return `<option value="${escapeHtml(event.eventKey)}" class="text-slate-900" ${event.eventKey === state.countdownEventKey ? 'selected' : ''}>${escapeHtml(event.short)} — ${escapeHtml(dateLabel)}</option>`;
+      }).join("");
     }
 
     function tickHeroLiveCountdown() {
-      const uni = state.universities.find(u => u.id === Number(state.countdownUniId)) || state.universities[0];
-      if (!uni) return;
+      const events = getCountdownEvents();
+      const event = events.find(item => item.eventKey === state.countdownEventKey) || events[0];
+      if (!event) return;
+      const uni = state.universities.find(u => u.id === Number(event.uniId));
       const nameEl = document.getElementById("heroNextExamName");
       const metaEl = document.getElementById("heroNextExamMeta");
-      if (nameEl) nameEl.textContent = getUniDisplayName(uni);
+      if (nameEl) nameEl.textContent = event.short;
 
-      const unitMatch = UNIT_CALENDAR_EVENTS.find(e => e.uniId === uni.id);
-      const timeStr = unitMatch ? unitMatch.time : "সকাল ১০:০০টা";
-      const centerStr = unitMatch ? unitMatch.centers : "নির্ধারিত পরীক্ষা কেন্দ্র";
-      if (metaEl) metaEl.textContent = `${translateDateText(uni.examDateText) || t('তারিখ শীঘ্রই', 'Date TBA')} • ${translateDateText(timeStr)} • ${t(centerStr, 'Designated Exam Centers')}`;
+      const dateText = state.lang === "en" ? event.iso : toBengaliNumber(event.iso);
+      if (metaEl) metaEl.textContent = `${dateText} • ${translateDateText(event.time)} • ${event.centers}`;
 
       const now = new Date();
       let refNow = now;
@@ -37,9 +61,10 @@
         refNow = new Date(2026, 9, 25, now.getHours(), now.getMinutes(), now.getSeconds());
       }
 
-      const iso = (uni.isoExamDate && uni.isoExamDate !== "9999-12-31") ? uni.isoExamDate : "2026-12-04";
+      const iso = event.iso;
       const parts = iso.split("-").map(Number);
-      const target = new Date(parts[0], parts[1] - 1, parts[2], 10, 0, 0);
+      const start = getEventStartTime(event.time);
+      const target = new Date(parts[0], parts[1] - 1, parts[2], start.hour, start.minute, 0);
       const diffMs = Math.max(0, target - refNow);
 
       const totalSecs = Math.floor(diffMs / 1000);

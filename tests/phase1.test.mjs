@@ -24,6 +24,7 @@ describe('Phase 1 Audit & Bug Fixes', async () => {
   await import('../js/utils/bengali.utils.js');
   await import('../js/utils/date.utils.js');
   await import('../js/data/universities.data.js');
+  await import('../js/data/units.data.js');
   await import('../js/utils/crypto.utils.js');
   await import('../js/features/eligibility/eligibility.js');
 
@@ -93,6 +94,13 @@ describe('Phase 1 Audit & Bug Fixes', async () => {
     const req = window.AdmissionApp.getEligibilityRequirements(buet);
     assert.equal(req.minTotal, 9.0);
     assert.equal(req.secondTime, false);
+
+    const mist = unis.find(u => u.id === 19);
+    const mistReq = window.AdmissionApp.getEligibilityRequirements(mist);
+    assert.deepEqual(mistReq.subjectRequirements.map(item => [item.subject, item.minPoint]), [
+      ['math', 4.0], ['physics', 4.0], ['chemistry', 4.0]
+    ]);
+    assert.equal(mistReq.subjectRuleCurrent, false);
   });
 
   test('4. Custom Universities use isCustom flag and safe ID generation', () => {
@@ -164,5 +172,14 @@ describe('Phase 1 Audit & Bug Fixes', async () => {
     assert.equal(kuet.defaultFee, 0);
     assert.equal(mist.isoExamDate, '9999-12-31');
     assert.equal(mist.defaultFee, 0);
+  });
+
+  test('9. Countdown dataset exposes separate unit-level events', () => {
+    const events = window.AdmissionApp.UNIT_CALENDAR_EVENTS;
+    const duEvents = events.filter(event => event.uniId === 1);
+    assert.equal(duEvents.length, 5);
+    assert.deepEqual(duEvents.map(event => event.iso), [
+      '2026-12-05', '2026-12-12', '2026-12-19', '2026-12-22', '2026-12-26'
+    ]);
   });
 });

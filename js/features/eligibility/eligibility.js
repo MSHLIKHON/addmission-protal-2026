@@ -7,6 +7,42 @@
   'use strict';
   const app = window.AdmissionApp = window.AdmissionApp || {};
 
+  const SUBJECT_GRADE_FIELDS = [
+    { key: "bangla", bn: "বাংলা", en: "Bangla" },
+    { key: "english", bn: "ইংরেজি", en: "English" },
+    { key: "physics", bn: "পদার্থ", en: "Physics" },
+    { key: "chemistry", bn: "রসায়ন", en: "Chemistry" },
+    { key: "math", bn: "উচ্চতর গণিত", en: "Higher Math" },
+    { key: "biology", bn: "জীববিজ্ঞান", en: "Biology" },
+    { key: "ict", bn: "আইসিটি", en: "ICT" }
+  ];
+
+  const GRADE_POINTS = { "A+": 5, "A": 4, "A-": 3.5, "B": 3, "C": 2, "D": 1, "F": 0 };
+
+  function renderSubjectGradeInputs() {
+    const host = document.getElementById("eligSubjectGradeInputs");
+    if (!host) return;
+    const previous = getEnteredSubjectGrades();
+    const isEn = Boolean(app.state && app.state.lang === "en");
+    host.innerHTML = SUBJECT_GRADE_FIELDS.map(subject => `
+      <label class="block text-xs font-bold text-slate-700">
+        <span class="block mb-1">${isEn ? subject.en : subject.bn}</span>
+        <select data-elig-subject="${subject.key}" class="w-full px-2.5 py-2 rounded-xl border border-blue-200 bg-white text-sm font-bold text-slate-800">
+          ${Object.keys(GRADE_POINTS).map(grade => `<option value="${grade}" ${(previous[subject.key]?.grade || 'A+') === grade ? 'selected' : ''}>${grade}</option>`).join("")}
+        </select>
+      </label>
+    `).join("");
+  }
+
+  function getEnteredSubjectGrades() {
+    const values = {};
+    document.querySelectorAll("[data-elig-subject]").forEach(select => {
+      const grade = select.value || "A+";
+      values[select.getAttribute("data-elig-subject")] = { grade, point: GRADE_POINTS[grade] ?? 0 };
+    });
+    return values;
+  }
+
   function getEligibilityRequirements(u) {
     if (u && u.eligibility) {
       const e = u.eligibility;
@@ -21,7 +57,10 @@
         reqText: e.notes || (app.state && app.state.lang === "en" ? `Min GPA: ${(e.minTotal || 7.5).toFixed(2)}` : `ন্যূনতম মোট জিপিএ ${toBengaliNumber(e.minTotal || 7.5)}`),
         notes: e.notes || "",
         source: e.source || u.circularUrl || null,
-        verifiedOn: e.verifiedOn || null
+        verifiedOn: e.verifiedOn || null,
+        subjectRequirements: Array.isArray(e.subjectRequirements) ? e.subjectRequirements : [],
+        subjectRuleCurrent: e.subjectRuleCurrent === true,
+        subjectRuleCycle: e.subjectRuleCycle || ""
       };
     }
 
@@ -36,7 +75,10 @@
       reqText: app.state && app.state.lang === "en" ? "Check official circular" : "অফিসিয়াল সার্কুলার দেখে নিশ্চিত হোন",
       notes: "",
       source: u ? u.circularUrl : null,
-      verifiedOn: null
+      verifiedOn: null,
+      subjectRequirements: [],
+      subjectRuleCurrent: false,
+      subjectRuleCycle: ""
     };
   }
 
@@ -49,6 +91,7 @@
     const hsc = parseFloat(document.getElementById("eligHscInput")?.value || "5.00") || 0;
     const timer = (document.getElementById("eligSecondTimeSelect")?.value) || "first";
     const total = ssc + hsc;
+    const subjectGrades = getEnteredSubjectGrades();
 
     let eligibleCount = 0;
     const cards = state.universities.map(u => {
@@ -61,7 +104,10 @@
       const groupOk = rule.groups.includes(group);
       const gpaOk = ssc >= rule.minSsc && hsc >= rule.minHsc && total >= adjTotal;
       const timerOk = timer === "first" || rule.secondTime;
-      const isEligible = groupOk && gpaOk && timerOk;
+      const failedSubjects = rule.subjectRequirements.filter(req => (subjectGrades[req.subject]?.point ?? 0) < req.minPoint);
+      const subjectRuleOk = failedSubjects.length === 0;
+      const subjectRuleBlocks = rule.subjectRuleCurrent && !subjectRuleOk;
+      const isEligible = groupOk && gpaOk && timerOk && !subjectRuleBlocks;
       if (isEligible) eligibleCount++;
 
       let reason = isEn ? "Fully eligible to apply!" : "আপনি আবেদনের জন্য সম্পূর্ণ যোগ্য!";
@@ -73,15 +119,34 @@
         reason = isEn
           ? `Minimum GPA requirement not met (${rule.reqText})`
           : `ন্যূনতম জিপিএ শর্ত পূরণ হয়নি (${rule.reqText})`;
+      } else if (subjectRuleBlocks) {
+        const labels = failedSubjects.map(req => {
+          const subject = SUBJECT_GRADE_FIELDS.find(item => item.key === req.subject);
+          return subject ? (isEn ? subject.en : subject.bn) : req.subject;
+        }).join(", ");
+        reason = isEn ? `Required subject grade not met: ${labels}` : `বিষয়ভিত্তিক গ্রেড শর্ত পূরণ হয়নি: ${labels}`;
       }
 
       const eligibleBadge = isEligible
         ? (isEn ? "Eligible" : "✅ আবেদনযোগ্য")
         : (isEn ? "Ineligible" : "❌ অযোগ্য");
 
-      const feeLabel = isEn
-        ? `Fee: ৳ ${escapeHtml(u.feeText)}`
-        : `ফি: ৳ ${escapeHtml(u.feeText)}`;
+      const feeLabel = `${isEn ? 'Fee:' : 'ফি:'} ${u.defaultFee > 0 ? '৳ ' : ''}${escapeHtml(u.feeText)}`;
+
+      const subjectRuleHtml = rule.subjectRequirements.length > 0 ? `
+        <div class="mt-2 rounded-xl border ${rule.subjectRuleCurrent ? 'border-emerald-200 bg-emerald-50' : 'border-amber-200 bg-amber-50'} p-2.5 text-[11px] leading-relaxed">
+          <div class="font-bold ${subjectRuleOk ? 'text-emerald-800' : 'text-rose-700'}">
+            ${subjectRuleOk ? (isEn ? '✓ Subject grades match' : '✓ বিষয়ভিত্তিক গ্রেড মিলেছে') : (isEn ? '⚠ Subject grade mismatch' : '⚠ বিষয়ভিত্তিক গ্রেড মিলেনি')}
+          </div>
+          <div class="text-slate-700 mt-0.5">${escapeHtml(rule.subjectRequirements.map(req => {
+            const subject = SUBJECT_GRADE_FIELDS.find(item => item.key === req.subject);
+            const label = subject ? (isEn ? subject.en : subject.bn) : req.subject;
+            const minGrade = Object.keys(GRADE_POINTS).find(grade => GRADE_POINTS[grade] === req.minPoint) || req.minPoint;
+            return `${label} ≥ ${minGrade}`;
+          }).join(' · '))}</div>
+          ${!rule.subjectRuleCurrent ? `<div class="font-semibold text-amber-800 mt-1">${isEn ? 'Reference only:' : 'রেফারেন্স মাত্র:'} ${escapeHtml(rule.subjectRuleCycle)}</div>` : ''}
+        </div>
+      ` : `<p class="mt-2 text-[11px] text-slate-500">${isEn ? 'No verified subject-grade rule has been published in the stored circular.' : 'সংরক্ষিত অফিসিয়াল circular-এ verified বিষয়ভিত্তিক grade rule নেই—GPA ফল আলাদাভাবে দেখানো হয়েছে।'}</p>`;
 
       const targetBtnText = u.target
         ? (isEn ? "⭐ Targeted" : "⭐ টার্গেটেড")
@@ -100,6 +165,7 @@
             </div>
             <h3 class="text-sm sm:text-base font-bold text-slate-900 mt-2">${escapeHtml(uniName)}</h3>
             <p class="text-xs text-slate-600 mt-0.5">${escapeHtml(rule.reqText)}</p>
+            ${subjectRuleHtml}
           </div>
           <div class="pt-2 border-t border-slate-200/60 flex items-center justify-between text-xs">
             <span class="${isEligible ? 'text-emerald-800 font-semibold' : 'text-rose-700 font-medium'}">${escapeHtml(reason)}</span>
@@ -133,5 +199,6 @@
   }
 
   app.getEligibilityRequirements = window.getEligibilityRequirements = getEligibilityRequirements;
+  app.renderSubjectGradeInputs = window.renderSubjectGradeInputs = renderSubjectGradeInputs;
   app.renderEligibilityView = window.renderEligibilityView = renderEligibilityView;
 })(window);

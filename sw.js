@@ -2,7 +2,7 @@
  * sw.js - Service Worker for Admission Portal 2026-2027
  * Cache-first strategy for static resources, enabling offline usability.
  */
-const CACHE_NAME = 'admission-portal-2026-v3';
+const CACHE_NAME = 'admission-portal-2026-v4';
 const STATIC_ASSETS = [
   './',
   './index.html',

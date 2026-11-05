@@ -7,6 +7,22 @@
   const app = window.AdmissionApp = window.AdmissionApp || {};
 
 function resolveDefaultEligibility(id, category, circularUrl) {
+      if (id === 19) {
+        return {
+          minSsc: 4.0, minHsc: 4.5, minTotal: 8.5, secondTimer: true,
+          groups: ['science'],
+          notes: 'MIST Engineering 2026 reference: SSC ৪.০০; HSC-তে গণিত, পদার্থ ও রসায়নে ন্যূনতম A (GP ৪.০০)',
+          subjectRequirements: [
+            { subject: 'math', minPoint: 4.0 },
+            { subject: 'physics', minPoint: 4.0 },
+            { subject: 'chemistry', minPoint: 4.0 }
+          ],
+          subjectRuleCurrent: false,
+          subjectRuleCycle: 'MIST Undergraduate 2026 reference; 2026–27 circular pending',
+          source: 'https://mist.ac.bd/study-with-us/undergraduate',
+          verifiedOn: '2026-11-05'
+        };
+      }
       if (id === 11) {
         return {
           minSsc: 4.0, minHsc: 5.0, minTotal: 9.0, secondTimer: false,
@@ -25,7 +41,7 @@ function resolveDefaultEligibility(id, category, circularUrl) {
           verifiedOn: '2026-10-25'
         };
       }
-      if ([8, 19, 20].includes(id)) {
+      if ([8, 20].includes(id)) {
         return {
           minSsc: 4.0, minHsc: 4.5, minTotal: 8.5, secondTimer: true,
           groups: ['science'],

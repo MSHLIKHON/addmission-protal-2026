@@ -21,6 +21,7 @@
     credSearch: "",
     activeCalMonth: "2026-12",
     countdownUniId: 9,
+    countdownEventKey: "",
     revealedPasswords: {},
     confirmCallback: null
   };
@@ -45,7 +46,7 @@
           u.userPass = prev.userPass || "";
           u.examRoll = prev.examRoll || "";
           u.note = prev.note || "";
-          if (prev.eligibility) {
+          if (prev.eligibility && !forceOfficialRefreshIds.has(u.id)) {
             u.eligibility = prev.eligibility;
           }
           if (!forceOfficialRefreshIds.has(u.id) && prev.customEdited && prev.isoExamDate && prev.isoExamDate !== "9999-12-31") {
